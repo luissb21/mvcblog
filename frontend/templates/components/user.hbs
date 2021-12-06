@@ -1,0 +1,12 @@
+<div>
+  {{#if isLogged}}
+  <!--Mis recetas-->
+  <li class="nav-item">
+    <a class="nav-link" aria-current="page" href="index.php?controller=posts&amp;action=myrecipes">{{i18n 'My Recipes'}}</a>
+  </li>
+  {{i18n 'Hello'}} {{currentUser}}
+  <input type="button" id='logoutbutton' value="{{i18n 'logout'}}"></input>
+  {{else}}
+  <a href='#login'>{{i18n 'Login'}}</a>
+  {{/if}}
+</div>

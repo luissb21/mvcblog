@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+html, body{
+  height: 100%;
+  width: 100%;
+  color: #222;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.bg {
+  background-image: url(../img/img-1.jpg);
+  background-image: center center;
+}
+
+.login_body {
+  background: white;
+  background: linear-gradient(to right, #D3D3D3, white);
+}
+
+.cont_login {
+  background-color: #90c041;    
+  margin-bottom: 120px;  /*  fixed-bottom */
+}
+
+.navbar {
+  padding: .8rem;
+  font-size: 16px;
+}
+.navbar-nav li{
+  padding-right: 30px;
+}
+
+.nav-link{
+  font-size: 1.1em !important;
+  text-decoration: none;
+}
+
+.cookinillas_h1{
+font-size: 28px;
+font-style: italic;
+}
+
+.hello{
+  padding: 15px 5px;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-indicators{
+  position: absolute;
+  transform: translateX(9%);
+}
+
+@keyframes backgroundflash {		
+  75% { opacity:1.0}
+  100% {opacity:0.0; display:none}
+}
+
+#flash {
+background-color:green;
+animation: backgroundflash 5s forwards; 
+}
+
+/* Like */
+
+.likeDiv{
+  height: 50px;
+  width: 25px;
+  margin: auto;
+  width: 50%;
+  position: relative;
+  padding: 10px;
+  /* box-shadow: 0 2px 8px rgba(0,0,0,.1); */
+  background-color: white;
+}
+
+.likeDiv i{
+  font-size: 2rem;
+  background-color: white;
+}
+
+.likeDiv:hover i{
+  color: #f50057;
+} 
+
+.fas{
+  color: #f50057;
+}
+
+
+/* My recipes */
+.img_receta{
+  height: 300px !important;
+  width: 300px !important;
+  border-radius: 20px;
+}
+
+.col_post{
+  /* height: 450px;
+  width: 350px !important; */
+  border: 1px solid rgb(189, 189, 189);
+  border-radius: 20px;
+  background-color: white;
+  margin-bottom: 12px;
+
+}
+
+.card-body{
+  background-color: white;
+} 
+
+.h6{
+  position: relative;
+  margin-top: none;
+}
+
+
+.postTitle{
+  font-size: 20px;
+  color: black;
+  text-decoration: none;
+}
+
+.postAutor{
+  font-size: 13px;
+}
+
+.postDelete{
+  font-size: 11px;
+}
+
+.postEdit{
+  font-size: 11px;
+}
+
+.h1_myrecipes{
+font-size: 45px;
+margin-bottom: 20px;
+} 
+
+.h6_myrecipes{
+  font-size: 22px;
+  color: #90c041;
+  margin-bottom: 25px;
+}
+
+.foot_container{
+  padding-top: 20px;
+}
+
+.redes{
+  margin-bottom: 20px;
+}
+
+.esei_link{
+  color: white;
+}
+
+
+.color_footer{
+  background-color: #90c041;
+}
+
+.foot_bot{
+  background-color: #455B21;
+  height: 30px;
+}
+
+.form_label{
+font-size: 20px;
+}
+
+#form_add, .margincont{
+  margin-left: 20px;
+}
+
+.actual_image{
+  height: 500px;
+  width: 500px;
+  border-radius: 10%;
+}
+
+.form_input, .remove_item_btn, .add_item_btn, .p_view{
+  font-size: 15px !important;
+  border-radius: 10%;
+}
+
+
+
+
+
+
+
+
+
+
+/*---Media Queries --*/
+@media (max-width: 992px) {
+
+  }
+@media (max-width: 768px) {
+  
+}
+@media (max-width: 576px) {
+  
+}
+
+
+/*--- Fixed Background Image --*/
+figure {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  margin: 0!important;
+}
+.fixed-wrap {
+  clip: rect(0, auto, auto, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#fixed {
+  background-image: url('img/mac.png');
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  will-change: transform;
+}
+/*--- Bootstrap Padding Fix --*/
+[class*="col-"] {
+    padding: 1rem;
+}
+
+
+
+
+/*
+Extra small (xs) devices (portrait phones, less than 576px)
+No media query since this is the default in Bootstrap
+
+Small (sm) devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+Medium (md) devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+Large (lg) devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+Extra (xl) large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+*/
+
+
+
+
+
+
+
+

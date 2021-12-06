@@ -1,0 +1,72 @@
+<div>
+  <header>
+    <nav id="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <!-- Logo + Cookinillas -->
+        <a class="navbar-brand"><img src="../img/logo.png"></a>
+        <h1 class="cookinillas_h1">Cookinillas</h1>
+        <!-- Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Options -->
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- Home -->
+            <li>
+              <a href="#posts">{{i18n 'Home'}}</a>
+            </li>
+            <!-- All Recipes -->
+            <li>
+              <a href="#allrecipes">{{i18n 'All Recipes'}}</a>
+            </li>
+            <!-- LOGED IN OPTIONS -->
+            <li>
+              <div id="userbar">Loading...</div>
+            </li>
+            <!-- Language -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="drop_language" role="button" data-bs-toggle="dropdown">{{i18n 'Language'}}</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div id="languagecontrol">Loading...</div>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- router contents -->
+  <main id="maincontent">Loading...</main>
+
+  <footer class=" text-center text-white color_footer">
+    <!-- fixed-bottom -->
+    <!-- Grid container -->
+    <div class="container foot_container">
+      <section class="redes">
+        <!-- Facebook -->
+        <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="https://es-es.facebook.com/"
+          role="button"><img src="../img/facebook.png"></a>
+
+        <!-- Twitter -->
+        <a class="btn btn-primary btn-floating m-1" style="background-color: #1DA1F2"
+          href="https://twitter.com/?lang=es" role="button"><img src="../img/twitter.png"></a>
+
+        <!-- Instagram -->
+        <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac"
+          href="https://www.instagram.com/?hl=es" role="button"><img src="../img/instagram.png"></a>
+      </section>
+    </div>
+
+    <!-- Copyright -->
+    <div class="foot_bot">
+      © ESEI:
+      <a class="esei_link" href="https://www.youtube.com/watch?v=HF_Ju2fCG30">www.uvigo.es</a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+</div>
