@@ -6,9 +6,6 @@ require_once(__DIR__."/../model/UserMapper.php");
 require_once(__DIR__."/../model/Post.php");
 require_once(__DIR__."/../model/PostMapper.php");
 
-require_once(__DIR__."/../model/Comment.php");
-require_once(__DIR__."/../model/CommentMapper.php");
-
 require_once(__DIR__."/BaseRest.php");
 
 /**
@@ -29,30 +26,52 @@ class PostRest extends BaseRest {
 		parent::__construct();
 
 		$this->postMapper = new PostMapper();
-		$this->commentMapper = new CommentMapper();
 	}
 
-	public function getPosts() {
-		$posts = $this->postMapper->findAll();
+	//Si el Usuario NO esta logeado, muestra los ultimos 12 Post, si lo esta muestra los Post likeados
+	//por el usuario, si no tiene likes, muestra la home publica
+	// public function getPosts() {
+	// 	$posts = $this->postMapper->findAll12();
 
-		// json_encode Post objects.
-		// since Post objects have private fields, the PHP json_encode will not
-		// encode them, so we will create an intermediate array using getters and
-		// encode it finally
-		$posts_array = array();
-		foreach($posts as $post) {
-			array_push($posts_array, array(
-				"id" => $post->getId(),
-				"title" => $post->getTitle(),
+	//  	$posts_array = array();
+	//  	foreach($posts as $post) {
+	//  		array_push($posts_array, array(
+	//  			"id" => $post->getId(),
+	// 			"title" => $post->getTitle(),
+	// 			"content" => $post->getContent(),
+	//  			"author_id" => $post->getAuthor()->getusername()
+	//  		));
+	//  	}
+
+	//  	header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+	//  	header('Content-Type: application/json');
+	// 	echo(json_encode($posts_array));
+	// }
+
+	 public function getPosts() {
+	  	$posts = $this->postMapper->findAll12();
+
+	 	// json_encode Post objects.
+	  	// since Post objects have private fields, the PHP json_encode will not
+	  	// encode them, so we will create an intermediate array using getters and
+	  	// encode it finally
+  		$posts_array = array();
+	  	foreach($posts as $post) {
+	  		array_push($posts_array, array(
+	  			"id" => $post->getId(),
+	 			"title" => $post->getTitle(),
 				"content" => $post->getContent(),
-				"author_id" => $post->getAuthor()->getusername()
-			));
-		}
+	  			"author" => $post->getAuthor()->getUsername(),
+				"time" => $post->getTime(),
+				"date" => $post->getDate(),
+				"image" => $post->getImage()
+	  		));
+	  	}
 
-		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
-		header('Content-Type: application/json');
-		echo(json_encode($posts_array));
-	}
+	  	header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+	  	header('Content-Type: application/json');
+	 	echo(json_encode($posts_array));
+	  }
 
 	public function createPost($data) {
 		$currentUser = parent::authenticateUser();
@@ -61,8 +80,10 @@ class PostRest extends BaseRest {
 		if (isset($data->title) && isset($data->content)) {
 			$post->setTitle($data->title);
 			$post->setContent($data->content);
-
-			$post->setAuthor($currentUser);
+			$post->setAuthor($data->author);
+			$post->setTime($data->time);
+			$post->setDate($data->date);
+			$post->setImage($data->image);
 		}
 
 		try {
@@ -91,7 +112,7 @@ class PostRest extends BaseRest {
 
 	public function readPost($postId) {
 		// find the Post object in the database
-		$post = $this->postMapper->findByIdWithComments($postId);
+		$post = $this->postMapper->findById($postId);
 		if ($post == NULL) {
 			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
 			echo("Post with id ".$postId." not found");
@@ -102,19 +123,9 @@ class PostRest extends BaseRest {
 			"id" => $post->getId(),
 			"title" => $post->getTitle(),
 			"content" => $post->getContent(),
-			"author_id" => $post->getAuthor()->getusername()
+			"author" => $post->getAuthor()->getusername()
 
 		);
-
-		//add comments
-		$post_array["comments"] = array();
-		foreach ($post->getComments() as $comment) {
-			array_push($post_array["comments"], array(
-				"id" => $comment->getId(),
-				"content" => $comment->getContent(),
-				"author" => $comment->getAuthor()->getusername()
-			));
-		}
 
 		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
 		header('Content-Type: application/json');
@@ -139,6 +150,7 @@ class PostRest extends BaseRest {
 		}
 		$post->setTitle($data->title);
 		$post->setContent($data->content);
+		$post->setAuthor($data->author);
 
 		try {
 			// validate Post object
@@ -173,34 +185,7 @@ class PostRest extends BaseRest {
 		header($_SERVER['SERVER_PROTOCOL'].' 204 No Content');
 	}
 
-	public function createComment($postId, $data) {
-		$currentUser = parent::authenticateUser();
-
-		$post = $this->postMapper->findById($postId);
-		if ($post == NULL) {
-			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-			echo("Post with id ".$postId." not found");
-			return;
-		}
-
-		$comment = new Comment();
-		$comment->setContent($data->content);
-		$comment->setAuthor($currentUser);
-		$comment->setPost($post);
-
-		try {
-			$comment->checkIsValidForCreate(); // if it fails, ValidationException
-
-			$this->commentMapper->save($comment);
-
-			header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
-
-		}catch(ValidationException $e) {
-			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-			header('Content-Type: application/json');
-			echo(json_encode($e->getErrors()));
-		}
-	}
+	
 }
 
 // URI-MAPPING for this Rest endpoint

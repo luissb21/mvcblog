@@ -3,14 +3,6 @@
 
 require_once(__DIR__."/../core/ValidationException.php");
 
-/**
-* Class Post
-*
-* Represents a Post in the blog. A Post was written by an
-* specific User (author) and contains a list of Comments
-*
-* @author lipido <lipido@gmail.com>
-*/
 class Post {
 
 	/**
@@ -41,7 +33,15 @@ class Post {
 	* The list of comments of this post
 	* @var mixed
 	*/
-	private $comments;
+	//private $comments;
+
+	private $time;
+
+	private $date;
+
+	private $ingredients;
+
+	private $image;
 
 	/**
 	* The constructor
@@ -52,13 +52,15 @@ class Post {
 	* @param User $author The author of the post
 	* @param mixed $comments The list of comments
 	*/
-	public function __construct($id=NULL, $title=NULL, $content=NULL, User $author=NULL, array $comments=NULL) {
+	public function __construct($id=NULL, $title=NULL, $content=NULL, User $author=NULL, $time=NULL, $date=NULL, $image=NULL, $ingredients=NULL) {
 		$this->id = $id;
 		$this->title = $title;
 		$this->content = $content;
 		$this->author = $author;
-		$this->comments = $comments;
-
+		$this->time = $time;
+		$this->date = $date;
+		$this->image = $image;
+		$this->ingredients = $ingredients;
 	}
 
 	/**
@@ -108,53 +110,50 @@ class Post {
 		$this->content = $content;
 	}
 
-	/**
-	* Gets the author of this post
-	*
-	* @return User The author of this post
-	*/
+
 	public function getAuthor() {
 		return $this->author;
 	}
 
-	/**
-	* Sets the author of this post
-	*
-	* @param User $author the author of this post
-	* @return void
-	*/
+
 	public function setAuthor(User $author) {
 		$this->author = $author;
 	}
 
-	/**
-	* Gets the list of comments of this post
-	*
-	* @return mixed The list of comments of this post
-	*/
-	public function getComments() {
-		return $this->comments;
+
+	public function getTime() {
+		return $this->time;
 	}
 
-	/**
-	* Sets the comments of the post
-	*
-	* @param mixed $comments the comments list of this post
-	* @return void
-	*/
-	public function setComments(array $comments) {
-		$this->comments = $comments;
+	public function setTime($time) {
+		$this->time = $time;
 	}
 
-	/**
-	* Checks if the current instance is valid
-	* for being updated in the database.
-	*
-	* @throws ValidationException if the instance is
-	* not valid
-	*
-	* @return void
-	*/
+	public function getDate() {
+		return $this->date;
+	}
+
+	public function setDate($date) {
+		$this->date = $date;
+	}
+
+
+	public function getIngredients() {
+		return $this->ingredients;
+	}
+
+	public function setIngredients(array $ingredients) {
+		$this->ingredients = $ingredients;
+	}
+
+	public function getImage() {
+		return $this->image;
+	}
+
+	public function setImage($image) {
+		$this->image = $image;
+	}
+
 	public function checkIsValidForCreate() {
 		$errors = array();
 		if (strlen(trim($this->title)) == 0 ) {
@@ -166,6 +165,20 @@ class Post {
 		if ($this->author == NULL ) {
 			$errors["author"] = "author is mandatory";
 		}
+		 if ($this->time == NULL ) {
+		 	$errors["time"] = "time is mandatory";
+		 }
+		 if ($this->date == NULL ) {
+		 	$errors["date"] = "date is mandatory";
+		 }
+
+/* 		if ($this->ingredients == NULL ) {
+			$errors["ingredients"] = "ingredients is mandatory";
+		} */
+
+	 	 if ($this->image == NULL ) {
+		 	$errors["image"] = "image is mandatory";
+		 }
 
 		if (sizeof($errors) > 0){
 			throw new ValidationException($errors, "post is not valid");

@@ -1,6 +1,6 @@
 class PostModel extends Fronty.Model {
 
-  constructor(id, title, author_id) {
+  constructor(id, title, author) {
     super('PostModel'); //call super
     
     if (id) {
@@ -11,8 +11,8 @@ class PostModel extends Fronty.Model {
       this.title = title;
     }
     
-    if (author_id) {
-      this.author_id = author_id;
+    if (author) {
+      this.author = author;
     }
   }
 
@@ -22,9 +22,9 @@ class PostModel extends Fronty.Model {
     });
   }
 
-  setAuthor_id(author_id) {
+  setAuthor(author) {
     this.set((self) => {
-      self.author_id = author_id;
+      self.author = author;
     });
   }
 }

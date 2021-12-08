@@ -36,5 +36,19 @@ I18n.translations = {
   'Home': 'Home',
   'All Recipes': 'Todas las Recetas',
   'Language': 'Idioma',
-  'My Recipes': 'Mis Recetas'
+  'My Recipes': 'Mis Recetas',
+  'Home': 'Home',
+  'Welcome to Cookinillas!': 'Bienvenido a Cookinillas!',
+  'Ourense´s best cooking web page': 'La mejor página web Ourense',
+  'Upload your own recipes': 'Sube tus propias recetas',
+  'Share your recipes with the world': 'Comparte tus recetas con el mundo',
+  'Register now!': 'Regístrate ahora!',
+  'Log in to taste the full experience': 'Logeate para disfrutar la experiencia completa!',
+  'Latest recipes from the community':'Ultimas recetas de la comunidad',
+  'Do not run out of hunger!':'No te quedes sin haambre!'
+
+
+
+
+
 }
