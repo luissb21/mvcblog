@@ -48,8 +48,8 @@
       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
         <div class="card border-0 bg-light mb-2">
 							<div class="card-body">
-								{{#if posts.getImage}}  <!--Si tiene imagen, muéstrala -->
-									<img src="../res/<?php echo $post->getImage() ?>" class="img-fluid img_receta" alt="img_not_found">
+								{{#if this.image}}  <!--Si tiene imagen, muéstrala -->
+									<img src="../res/{{this.image}}" class="img-fluid img_receta" alt="img_not_found">
 								{{else}}  <!--Si NO tiene imagen, muestra la imagen por DEFECTO -->
                  					<img src="../img/image_not_found.jpeg" class="img-fluid img_receta" alt="img_not_found">
 								{{/if}}

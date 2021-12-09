@@ -1,6 +1,6 @@
-<tr key="{{id}}">
-  <td><a href="#view-post?id={{id}}">{{title}}</a></td>
-  <td>{{author}} ({{user.currentUser}})</td>
+<div key="{{id}}">
+  <h6><a class="postTitle" href="#view-post?id={{id}}">{{title}}</a></h6>
+  <p class="postAutor" >Autor: {{author}}</p>
   <td>
 
     {{#if_eq user.currentUser author}}
@@ -9,4 +9,7 @@
       <button class="edit-button" item="{{id}}">{{i18n 'edit'}}</button>
     {{/if_eq}}
   </td>
-</tr>
+</div>
+
+
+						

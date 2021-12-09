@@ -1,6 +1,6 @@
 class PostModel extends Fronty.Model {
 
-  constructor(id, title, content,author) {
+  constructor(id, title, content,author,time,date,image) {
     super('PostModel'); //call super
     
     if (id) {
@@ -17,6 +17,18 @@ class PostModel extends Fronty.Model {
     
     if (author) {
       this.author = author;
+    }
+
+    if (time) {
+      this.time = time;
+    }
+
+    if (date) {
+      this.date = date;
+    }
+
+    if (image) {
+      this.image = image;
     }
   }
 

@@ -28,27 +28,12 @@ class PostRest extends BaseRest {
 		$this->postMapper = new PostMapper();
 	}
 
-	//Si el Usuario NO esta logeado, muestra los ultimos 12 Post, si lo esta muestra los Post likeados
-	//por el usuario, si no tiene likes, muestra la home publica
-	// public function getPosts() {
-	// 	$posts = $this->postMapper->findAll12();
-
-	//  	$posts_array = array();
-	//  	foreach($posts as $post) {
-	//  		array_push($posts_array, array(
-	//  			"id" => $post->getId(),
-	// 			"title" => $post->getTitle(),
-	// 			"content" => $post->getContent(),
-	//  			"author_id" => $post->getAuthor()->getusername()
-	//  		));
-	//  	}
-
-	//  	header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
-	//  	header('Content-Type: application/json');
-	// 	echo(json_encode($posts_array));
-	// }
+//function getPost(): Retorna a la vista principal (HOME) o bien los ultimos 12 post de la BD si el usuario 
+//no esta logeado, o bien , si esta logeado, las recetas las cuales a marcado como favoritas.
+//En caso de no tener recetas favoritas mostraría los ultimos 12 posts.
 
 	 public function getPosts() {
+		$currentUser = parent::authenticateUser();
 	  	$posts = $this->postMapper->findAll12();
 
 	 	// json_encode Post objects.
