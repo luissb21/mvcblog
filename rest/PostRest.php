@@ -33,36 +33,67 @@ class PostRest extends BaseRest {
 //En caso de no tener recetas favoritas mostraría los ultimos 12 posts.
 
 	 public function getPosts() {
-		$currentUser = parent::authenticateUser();
-	  	$posts = $this->postMapper->findAll12();
+		$currentUser = parent::authenticateUser(); //TODO
+	  	if($currentUser){	//BEGIN: Si ESTÁ logeado		
+			$posts = $this->postMapper->findPostLiked($currentUser->getUsername());
+			$posts_array = array();
+			if(!empty($posts)){
+				foreach($posts as $post) {
+					array_push($posts_array, array(
+					  "id" => $post->getId(),
+					  "title" => $post->getTitle(),
+					  "content" => $post->getContent(),
+					  "author" => $post->getAuthor(),
+					  "time" => $post->getTime(),
+					  "date" => $post->getDate(),
+					  "image" => $post->getImage()
+			));
+		}
+			} else {
+				$posts = $this->postMapper->findAll12();
+  				$posts_array = array();
+	 		 	foreach($posts as $post) {
+	 	 			array_push($posts_array, array(
+						"id" => $post->getId(),
+						"title" => $post->getTitle(),
+						"content" => $post->getContent(),
+						"author" => $post->getAuthor(),
+						"time" => $post->getTime(),
+						"date" => $post->getDate(),
+						"image" => $post->getImage()
+	  		));
+	  	}
+			}
 
-	 	// json_encode Post objects.
-	  	// since Post objects have private fields, the PHP json_encode will not
-	  	// encode them, so we will create an intermediate array using getters and
-	  	// encode it finally
+		  } else {//END: Si ESTÁ logeado
+		
+		$posts = $this->postMapper->findAll12();
   		$posts_array = array();
 	  	foreach($posts as $post) {
 	  		array_push($posts_array, array(
 	  			"id" => $post->getId(),
 	 			"title" => $post->getTitle(),
 				"content" => $post->getContent(),
-	  			"author" => $post->getAuthor()->getUsername(),
+	  			"author" => $post->getAuthor(),
 				"time" => $post->getTime(),
 				"date" => $post->getDate(),
 				"image" => $post->getImage()
 	  		));
 	  	}
+	}
 
 	  	header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
 	  	header('Content-Type: application/json');
 	 	echo(json_encode($posts_array));
 	  }
 
+
+
+//function createPost: Crea una receta nueva en la BD
 	public function createPost($data) {
-		$currentUser = parent::authenticateUser();
 		$post = new Post();
 
-		if (isset($data->title) && isset($data->content)) {
+		if (isset($data->title) && isset($data->content) && isset($data->author) && isset($data->time) && isset($data->date) && isset($data->image)) {
 			$post->setTitle($data->title);
 			$post->setContent($data->content);
 			$post->setAuthor($data->author);
@@ -85,7 +116,11 @@ class PostRest extends BaseRest {
 			echo(json_encode(array(
 				"id"=>$postId,
 				"title"=>$post->getTitle(),
-				"content" => $post->getContent()
+				"content" => $post->getContent(),
+				"author" => $post->getAuthor(),
+				"time" => $post->getTime(),
+				"date" => $post->getDate(),
+				"image" => $post->getImage()
 			)));
 
 		} catch (ValidationException $e) {
@@ -94,6 +129,8 @@ class PostRest extends BaseRest {
 			echo(json_encode($e->getErrors()));
 		}
 	}
+
+
 
 	public function readPost($postId) {
 		// find the Post object in the database

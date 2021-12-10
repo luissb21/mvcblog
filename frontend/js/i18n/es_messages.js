@@ -45,7 +45,20 @@ I18n.translations = {
   'Register now!': 'Regístrate ahora!',
   'Log in to taste the full experience': 'Logeate para disfrutar la experiencia completa!',
   'Latest recipes from the community':'Ultimas recetas de la comunidad',
-  'Do not run out of hunger!':'No te quedes sin haambre!'
+  'Do not run out of hunger!':'No te quedes sin haambre!',
+  'Create Recipe':'Crear receta',
+  'Show your recipes to the world!':'Enseña tus recetas al mundo!',
+  'Add a recipe image':'Añade una imagen para la receta',
+  'Preparation time':'Tiempo de preparación',
+  'Date':'Fecha',
+  '':'',
+  '':'',
+  '':'',
+  '':'',
+  '':'',
+  '':'',
+  '':'',
+
 
 
 

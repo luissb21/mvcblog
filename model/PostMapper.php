@@ -63,14 +63,13 @@ class PostMapper
 		$posts = array();
 
 		foreach ($posts_db as $post) {
-			$author = new User($post["username"]);
-			array_push($posts, new Post($post["id"], $post["title"], $post["content"], $author, $post["time"], $post["date"], $post["image"]));
+			array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["username"], $post["time"], $post["date"], $post["image"]));
 		}
 
 		return $posts;
 	}
 
-	public function findPostLiked($currentuser) {//iNDEX PRIV
+	public function findPostLiked($currentuser) {//iNDEX PRIV 
 		$stmt = $this->db->query(
 			"SELECT * FROM posts, users, post_like WHERE users.username ='$currentuser' 
 			AND users.username = post_like.user_name AND posts.id = post_like.post_id ORDER BY posts.date DESC"
@@ -80,8 +79,7 @@ class PostMapper
 		$posts = array();
 
 		foreach ($posts_db as $post) {
-			$author = new User($post["author"]); //cambiar esto?
-			array_push($posts, new Post($post["id"], $post["title"], $post["content"], $author, $post["time"], $post["date"], $post["image"]));
+			array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"]));
 		}
 
 		return $posts;
@@ -257,7 +255,7 @@ class PostMapper
 	public function save(Post $post)
 	{
 		$stmt = $this->db->prepare("INSERT INTO posts(title, content, author, time, date, image) values (?,?,?,?,?,?)");
-		$stmt->execute(array($post->getTitle(), $post->getContent(), $post->getAuthor()->getUsername(), $post->getTime(), $post->getDate(), $post->getImage()));
+		$stmt->execute(array($post->getTitle(), $post->getContent(), $post->getAuthor(), $post->getTime(), $post->getDate(), $post->getImage()));
 		return $this->db->lastInsertId();
 	}
 

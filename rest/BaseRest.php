@@ -46,4 +46,18 @@ class BaseRest {
 			}
 		}
 	}
+
+
+	public function userInSession() {
+		if (!isset($_SERVER['PHP_AUTH_USER'])) {
+			return false;
+		} else{
+			return new User($_SERVER['PHP_AUTH_USER']);
+		}
+
+	}
+
+
+
+
 }

@@ -52,7 +52,7 @@ class Post {
 	* @param User $author The author of the post
 	* @param mixed $comments The list of comments
 	*/
-	public function __construct($id=NULL, $title=NULL, $content=NULL, User $author=NULL, $time=NULL, $date=NULL, $image=NULL, $ingredients=NULL) {
+	public function __construct($id=NULL, $title=NULL, $content=NULL, $author=NULL, $time=NULL, $date=NULL, $image=NULL, $ingredients=NULL) {
 		$this->id = $id;
 		$this->title = $title;
 		$this->content = $content;
@@ -116,7 +116,7 @@ class Post {
 	}
 
 
-	public function setAuthor(User $author) {
+	public function setAuthor($author) {
 		$this->author = $author;
 	}
 

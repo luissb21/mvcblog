@@ -1,6 +1,6 @@
 class PostAddComponent extends Fronty.ModelComponent {
   constructor(postsModel, userModel, router) {
-    super(Handlebars.templates.postedit, postsModel);
+    super(Handlebars.templates.postadd, postsModel); //Cambiar postedit por postadd y añadir en appjs
     this.postsModel = postsModel; // posts
     
     this.userModel = userModel; // global
@@ -14,6 +14,9 @@ class PostAddComponent extends Fronty.ModelComponent {
       newPost.title = $('#title').val();
       newPost.content = $('#content').val();
       newPost.author = this.userModel.currentUser;
+      newPost.time = $('#time').val();
+      newPost.date = $('#date').val();
+      newPost.image = $('#image').val();
       this.postsService.addPost(newPost)
         .then(() => {
           this.router.goToPage('posts');

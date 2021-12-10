@@ -35,6 +35,8 @@ Promise.all([
       Handlebars.templates.poststable = Handlebars.compile(source)),
     loadTextFile('templates/components/post-edit.hbs').then((source) =>
       Handlebars.templates.postedit = Handlebars.compile(source)),
+      loadTextFile('templates/components/post-add.hbs').then((source) =>
+      Handlebars.templates.postadd = Handlebars.compile(source)),
     loadTextFile('templates/components/post-view.hbs').then((source) =>
       Handlebars.templates.postview = Handlebars.compile(source)),
     loadTextFile('templates/components/post-row.hbs').then((source) =>

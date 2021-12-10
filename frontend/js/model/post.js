@@ -37,10 +37,36 @@ class PostModel extends Fronty.Model {
       self.title = title;
     });
   }
+  
+  setContent(content) {
+    this.set((self) => {
+      self.content = content;
+    });
+  }
 
   setAuthor(author) {
     this.set((self) => {
       self.author = author;
     });
   }
+
+  setTime(time) {
+    this.set((self) => {
+      self.time = time;
+    });
+  }
+
+  setDate(date) {
+    this.set((self) => {
+      self.date = date;
+    });
+  }
+
+  setImage(image) {
+    this.set((self) => {
+      self.image = image;
+    });
+  }
+
+
 }

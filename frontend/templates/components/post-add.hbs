@@ -1,0 +1,55 @@
+<div>
+
+  <div class="container py-5 text-center">
+    <h1 class="h1_myrecipes">{{i18n 'Create Recipe'}}</h1>
+    <h6 class="h6_myrecipes">{{i18n 'Show your recipes to the world!'}}</h6>
+  </div>
+
+
+  <!-- Titulo de la receta -->
+  <div class="form-group row form_row">
+    <div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
+      <label for="form_title" class="form_label">{{i18n 'Title'}}</label>
+      <input type="text" id="title" class="form-control form_input" placeholder="Title" required>
+      {{#i18n}}{{errors.title}}{{/i18n}}<br>
+    </div>
+  </div>
+
+  	<!-- Subir fotografia de la receta -->
+	<div class="form-group row form_row">
+		<div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
+			<label for="upload_file" class="form_label">{{i18n 'Add a recipe image'}}</label>
+			<input type="file" class="form-control form-control-lg form_input"  id="image" accept=".jpg, .jpeg, .png" class="form-control-file upload_file" required>
+			{{#i18n}}{{errors.image}}{{/i18n}}<br>
+		</div>
+	</div>
+
+<!-- Contenido de la receta -->
+	<div class="form-group row form_row">
+		<div class="col-lg-5 col-md-8 col-sm-7 col-xs-6">
+			<label for="form_content" class="form_label">{{i18n 'Content'}}</label>
+			<textarea class="form-control form_content form_input" id="content" rows="8" required></textarea>
+			{{#i18n}}{{errors.content}}{{/i18n}}<br>
+		</div>
+	</div>
+
+  <!-- Tiempo de preparación de la receta -->
+	<div class="form-group row form_row">
+		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+			<label for="form_time" class="form_label">{{i18n 'Preparation time'}}</label>
+			<input type="text" id="time" class="form-control form_input" placeholder="Estimated time..." required>
+			{{#i18n}}{{errors.time}}{{/i18n}}<br>
+		</div>
+	</div>
+
+<!-- Fecha de la receta -->
+	<div class="form-group row form_row">
+	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+		<label for="form_date" class="form_label">{{i18n 'Date'}}</label>
+		<input type="date" id="date" class="form-control form_input" required>
+		{{#i18n}}{{errors.date}}{{/i18n}}<br>
+	</div>
+	</div>
+
+  <input type="button" id="savebutton" value="{{i18n 'Save'}}"></input>
+</div>
