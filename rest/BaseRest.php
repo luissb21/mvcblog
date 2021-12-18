@@ -28,7 +28,7 @@ class BaseRest {
 	public function authenticateUser() {
 		if (!isset($_SERVER['PHP_AUTH_USER'])) {
 			header($_SERVER['SERVER_PROTOCOL'].' 401 Unauthorized');
-			header('WWW-Authenticate: Basic realm="Rest API of MVCBLOG"');
+			//header('WWW-Authenticate: Basic realm="Rest API of MVCBLOG"');
 			die('This operation requires authentication');
 		}
 		else {
@@ -40,7 +40,7 @@ class BaseRest {
 				return new User($_SERVER['PHP_AUTH_USER']);
 			} else {
 				header($_SERVER['SERVER_PROTOCOL'].' 401 Unauthorized');
-				header('WWW-Authenticate: Basic realm="Rest API of MVCBLOG"');
+				//header('WWW-Authenticate: Basic realm="Rest API of MVCBLOG"');
 
 				die('The username/password is not valid');
 			}
@@ -48,16 +48,21 @@ class BaseRest {
 	}
 
 
+
+
+
+
+
+
+	
+
 	public function userInSession() {
 		if (!isset($_SERVER['PHP_AUTH_USER'])) {
-			return false;
-		} else{
-			return new User($_SERVER['PHP_AUTH_USER']);
-		}
-
+			return null;
+		} else {
+			return $_SERVER['PHP_AUTH_USER'];
+			}
 	}
-
-
 
 
 }

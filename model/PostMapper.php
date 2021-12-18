@@ -55,7 +55,7 @@ class PostMapper
 	}
 
 
-	public function findAll12()
+	public function findAll12()//TODO USERNAME?
 	{
 		$stmt = $this->db->query("SELECT * FROM posts, users WHERE users.username = posts.author ORDER BY posts.date DESC limit 12");
 		$posts_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -175,7 +175,7 @@ class PostMapper
 				$post["id"],
 				$post["title"],
 				$post["content"],
-				new User($post["author"]),
+				$post["author"],
 				$post["time"],
 				$post["date"],
 				$post["image"]
@@ -185,65 +185,7 @@ class PostMapper
 		}
 	}
 
-	/**
-	 * Loads a Post from the database given its id
-	 *
-	 * It includes all the ingredients
-	 *
-	 * @throws PDOException if a database error occurs
-	 * @return Post The Post instances (without ingredients). NULL
-	 * if the Post is not found
-	 */
-	// public function findByIdWithIngredients($postid)
-	// {
-	// 	$stmt = $this->db->prepare("SELECT
-	// 		posts.id,
-	// 		posts.title,
-	// 		posts.content,
-	// 		posts.author,
-	// 		posts.time,
-	// 		posts.date,
-	// 		posts.image,
-	// 		post_ingr.post_id,
-	// 		post_ingr.ingr_name,
-	// 		post_ingr.cantidad
-	// 		FROM posts LEFT OUTER JOIN post_ingr
-	// 		ON posts.id = post_ingr.post_id
-	// 		WHERE
-	// 		posts.id=? ");
 
-	// 	$stmt->execute(array($postid));
-	// 	$post_wt_ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	// 	//print_r($post_wt_ingredients);
-
-	// 	if (sizeof($post_wt_ingredients) > 0) {
-	// 		$post = new Post(
-	// 			$post_wt_ingredients[0]["id"],
-	// 			$post_wt_ingredients[0]["title"],
-	// 			$post_wt_ingredients[0]["content"],
-	// 			new User($post_wt_ingredients[0]["author"]),
-	// 			$post_wt_ingredients[0]["time"],
-	// 			$post_wt_ingredients[0]["date"],
-	// 			$post_wt_ingredients[0]["image"]
-	// 		);
-	// 		$ingredient_array = array();
-	// 		if ($post_wt_ingredients[0]["ingr_name"] != null) {
-	// 			foreach ($post_wt_ingredients as $ingredient) {
-	// 				$ingredient = new Post_ingr(
-	// 					$ingredient["id"],
-	// 					$ingredient["ingr_name"],
-	// 					$ingredient["cantidad"],
-	// 				);
-	// 				array_push($ingredient_array, $ingredient);
-	// 			}
-	// 		}
-	// 		$post->setingredients($ingredient_array);
-
-	// 		return $post;
-	// 	} else {
-	// 		return NULL;
-	// 	}
-	// }
 
 	/**
 	 * Saves a Post into the database

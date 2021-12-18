@@ -9,6 +9,16 @@ class PostAddComponent extends Fronty.ModelComponent {
 
     this.postsService = new PostsService();
 
+    //Obtencion y redireccionamiento a la carpeta /res de las imagenes subidas al crear una receta
+    var selectedImg = null;
+    this.addEventListener('change', '#image', (event) => {
+      //console.log(event);
+      selectedImg = event.target.files[0];
+      //console.log(selectedImg);
+
+});
+
+
     this.addEventListener('click', '#savebutton', () => {
       var newPost = {};
       newPost.title = $('#title').val();

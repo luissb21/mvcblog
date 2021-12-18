@@ -1,59 +1,48 @@
 <?php
 
-require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../model/UserMapper.php");
+require_once(__DIR__ . "/../model/User.php");
+require_once(__DIR__ . "/../model/UserMapper.php");
 
-require_once(__DIR__."/../model/Post.php");
-require_once(__DIR__."/../model/PostMapper.php");
+require_once(__DIR__ . "/../model/Post.php");
+require_once(__DIR__ . "/../model/PostMapper.php");
 
-require_once(__DIR__."/BaseRest.php");
+require_once(__DIR__ . "/BaseRest.php");
 
 /**
-* Class PostRest
-*
-* It contains operations for creating, retrieving, updating, deleting and
-* listing posts, as well as to create comments to posts.
-*
-* Methods gives responses following Restful standards. Methods of this class
-* are intended to be mapped as callbacks using the URIDispatcher class.
-*
-*/
-class PostRest extends BaseRest {
+ * Class PostRest
+ *
+ * It contains operations for creating, retrieving, updating, deleting and
+ * listing posts, as well as to create comments to posts.
+ *
+ * Methods gives responses following Restful standards. Methods of this class
+ * are intended to be mapped as callbacks using the URIDispatcher class.
+ *
+ */
+class PostRest extends BaseRest
+{
 	private $postMapper;
 	private $commentMapper;
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->postMapper = new PostMapper();
 	}
 
-//function getPost(): Retorna a la vista principal (HOME) o bien los ultimos 12 post de la BD si el usuario 
-//no esta logeado, o bien , si esta logeado, las recetas las cuales a marcado como favoritas.
-//En caso de no tener recetas favoritas mostraría los ultimos 12 posts.
+	//function getPost(): Retorna a la vista principal (HOME) o bien los ultimos 12 post de la BD si el usuario 
+	//no esta logeado, o bien , si esta logeado, las recetas las cuales a marcado como favoritas.
+	//En caso de no tener recetas favoritas mostraría los ultimos 12 posts.
 
-	 public function getPosts() {
-		$currentUser = parent::authenticateUser(); //TODO
-	  	if($currentUser){	//BEGIN: Si ESTÁ logeado		
+	public function getPosts()
+	{
+		$currentUser = parent::authenticateUser();
+		if ($currentUser) {	//BEGIN: Si ESTÁ logeado buscamos los likes del usuario		
 			$posts = $this->postMapper->findPostLiked($currentUser->getUsername());
 			$posts_array = array();
-			if(!empty($posts)){
-				foreach($posts as $post) {
+			if (!empty($posts)) {	//Si el usuario TIENE likes
+				foreach ($posts as $post) {
 					array_push($posts_array, array(
-					  "id" => $post->getId(),
-					  "title" => $post->getTitle(),
-					  "content" => $post->getContent(),
-					  "author" => $post->getAuthor(),
-					  "time" => $post->getTime(),
-					  "date" => $post->getDate(),
-					  "image" => $post->getImage()
-			));
-		}
-			} else {
-				$posts = $this->postMapper->findAll12();
-  				$posts_array = array();
-	 		 	foreach($posts as $post) {
-	 	 			array_push($posts_array, array(
 						"id" => $post->getId(),
 						"title" => $post->getTitle(),
 						"content" => $post->getContent(),
@@ -61,36 +50,50 @@ class PostRest extends BaseRest {
 						"time" => $post->getTime(),
 						"date" => $post->getDate(),
 						"image" => $post->getImage()
-	  		));
-	  	}
+					));
+				}
+			} else {	//Si el usuario NO TIENE likes mostramos las 12 ultimas recetas
+				$posts = $this->postMapper->findAll12();
+				$posts_array = array();
+				foreach ($posts as $post) {
+					array_push($posts_array, array(
+						"id" => $post->getId(),
+						"title" => $post->getTitle(),
+						"content" => $post->getContent(),
+						"author" => $post->getAuthor(),
+						"time" => $post->getTime(),
+						"date" => $post->getDate(),
+						"image" => $post->getImage()
+					));
+				}
 			}
+		} else { //END: Si NO ESTÁ logeado mostramos las 12 ultimas recetas
 
-		  } else {//END: Si ESTÁ logeado
-		
-		$posts = $this->postMapper->findAll12();
-  		$posts_array = array();
-	  	foreach($posts as $post) {
-	  		array_push($posts_array, array(
-	  			"id" => $post->getId(),
-	 			"title" => $post->getTitle(),
-				"content" => $post->getContent(),
-	  			"author" => $post->getAuthor(),
-				"time" => $post->getTime(),
-				"date" => $post->getDate(),
-				"image" => $post->getImage()
-	  		));
-	  	}
+			$posts = $this->postMapper->findAll12();
+			$posts_array = array();
+			foreach ($posts as $post) {
+				array_push($posts_array, array(
+					"id" => $post->getId(),
+					"title" => $post->getTitle(),
+					"content" => $post->getContent(),
+					"author" => $post->getAuthor(),
+					"time" => $post->getTime(),
+					"date" => $post->getDate(),
+					"image" => $post->getImage()
+				));
+			}
+		}
+
+		header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
+		header('Content-Type: application/json');
+		echo (json_encode($posts_array));
 	}
 
-	  	header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
-	  	header('Content-Type: application/json');
-	 	echo(json_encode($posts_array));
-	  }
 
 
-
-//function createPost: Crea una receta nueva en la BD
-	public function createPost($data) {
+	//function createPost: Crea una receta nueva en la BD
+	public function createPost($data)
+	{
 		$post = new Post();
 
 		if (isset($data->title) && isset($data->content) && isset($data->author) && isset($data->time) && isset($data->date) && isset($data->image)) {
@@ -99,7 +102,17 @@ class PostRest extends BaseRest {
 			$post->setAuthor($data->author);
 			$post->setTime($data->time);
 			$post->setDate($data->date);
-			$post->setImage($data->image);
+			$image_name = basename($data->image);
+			$post->setImage($image_name);
+
+			// Get image name
+			//$image = $_FILES['image']['name'];
+			//$post->setImage($image);
+			// image file directory
+			//$target = "res/" . basename($image_name);
+			//move_uploaded_file($_FILES['image']['tmp_name'], $target);
+
+			$putdata = fopen("php://input", "r");
 		}
 
 		try {
@@ -110,34 +123,34 @@ class PostRest extends BaseRest {
 			$postId = $this->postMapper->save($post);
 
 			// response OK. Also send post in content
-			header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
-			header('Location: '.$_SERVER['REQUEST_URI']."/".$postId);
+			header($_SERVER['SERVER_PROTOCOL'] . ' 201 Created');
+			header('Location: ' . $_SERVER['REQUEST_URI'] . "/" . $postId);
 			header('Content-Type: application/json');
-			echo(json_encode(array(
-				"id"=>$postId,
-				"title"=>$post->getTitle(),
+			echo (json_encode(array(
+				"id" => $postId,
+				"title" => $post->getTitle(),
 				"content" => $post->getContent(),
 				"author" => $post->getAuthor(),
 				"time" => $post->getTime(),
 				"date" => $post->getDate(),
 				"image" => $post->getImage()
 			)));
-
 		} catch (ValidationException $e) {
-			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+			header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
 			header('Content-Type: application/json');
-			echo(json_encode($e->getErrors()));
+			echo (json_encode($e->getErrors()));
 		}
 	}
 
 
 
-	public function readPost($postId) {
+	public function readPost($postId)
+	{
 		// find the Post object in the database
 		$post = $this->postMapper->findById($postId);
 		if ($post == NULL) {
-			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-			echo("Post with id ".$postId." not found");
+			header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+			echo ("Post with id " . $postId . " not found");
 			return;
 		}
 
@@ -149,25 +162,26 @@ class PostRest extends BaseRest {
 
 		);
 
-		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+		header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
 		header('Content-Type: application/json');
-		echo(json_encode($post_array));
+		echo (json_encode($post_array));
 	}
 
-	public function updatePost($postId, $data) {
+	public function updatePost($postId, $data)
+	{
 		$currentUser = parent::authenticateUser();
 
 		$post = $this->postMapper->findById($postId);
 		if ($post == NULL) {
-			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-			echo("Post with id ".$postId." not found");
+			header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+			echo ("Post with id " . $postId . " not found");
 			return;
 		}
 
 		// Check if the Post author is the currentUser (in Session)
 		if ($post->getAuthor() != $currentUser) {
-			header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
-			echo("you are not the author of this post");
+			header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+			echo ("you are not the author of this post");
 			return;
 		}
 		$post->setTitle($data->title);
@@ -178,44 +192,43 @@ class PostRest extends BaseRest {
 			// validate Post object
 			$post->checkIsValidForUpdate(); // if it fails, ValidationException
 			$this->postMapper->update($post);
-			header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
-		}catch (ValidationException $e) {
-			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
+			header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
+		} catch (ValidationException $e) {
+			header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
 			header('Content-Type: application/json');
-			echo(json_encode($e->getErrors()));
+			echo (json_encode($e->getErrors()));
 		}
 	}
 
-	public function deletePost($postId) {
+	public function deletePost($postId)
+	{
 		$currentUser = parent::authenticateUser();
 		$post = $this->postMapper->findById($postId);
 
 		if ($post == NULL) {
-			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
-			echo("Post with id ".$postId." not found");
+			header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+			echo ("Post with id " . $postId . " not found");
 			return;
 		}
 		// Check if the Post author is the currentUser (in Session)
 		if ($post->getAuthor() != $currentUser) {
-			header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
-			echo("you are not the author of this post");
+			header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+			echo ("you are not the author of this post");
 			return;
 		}
 
 		$this->postMapper->delete($post);
 
-		header($_SERVER['SERVER_PROTOCOL'].' 204 No Content');
+		header($_SERVER['SERVER_PROTOCOL'] . ' 204 No Content');
 	}
-
-	
 }
 
 // URI-MAPPING for this Rest endpoint
 $postRest = new PostRest();
 URIDispatcher::getInstance()
-->map("GET",	"/post", array($postRest,"getPosts"))
-->map("GET",	"/post/$1", array($postRest,"readPost"))
-->map("POST", "/post", array($postRest,"createPost"))
-->map("POST", "/post/$1/comment", array($postRest,"createComment"))
-->map("PUT",	"/post/$1", array($postRest,"updatePost"))
-->map("DELETE", "/post/$1", array($postRest,"deletePost"));
+	->map("GET",	"/post", array($postRest, "getPosts"))
+	->map("GET",	"/post/$1", array($postRest, "readPost"))
+	->map("POST", "/post", array($postRest, "createPost"))
+	->map("POST", "/post/$1/comment", array($postRest, "createComment"))
+	->map("PUT",	"/post/$1", array($postRest, "updatePost"))
+	->map("DELETE", "/post/$1", array($postRest, "deletePost"));
