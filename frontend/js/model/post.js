@@ -1,6 +1,6 @@
 class PostModel extends Fronty.Model {
 
-  constructor(id, title, content,author,time,date,image) {
+  constructor(id, title, content,author,time,date,image,imgb64) {
     super('PostModel'); //call super
     
     if (id) {
@@ -30,6 +30,11 @@ class PostModel extends Fronty.Model {
     if (image) {
       this.image = image;
     }
+
+    if (imgb64) {
+      this.imgb64 = imgb64;
+    }
+
   }
 
   setTitle(title) {
@@ -68,5 +73,10 @@ class PostModel extends Fronty.Model {
     });
   }
 
+  setImgb64(imgb64) {
+    this.set((self) => {
+      self.imgb64 = imgb64;
+    });
+  }
 
 }

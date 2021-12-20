@@ -10,7 +10,7 @@
   <div class="form-group row form_row">
     <div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
       <label for="form_title" class="form_label">{{i18n 'Title'}}</label>
-      <input type="text" id="title" class="form-control form_input" placeholder="Title" required>
+      <input type="text" id="recipe" class="form-control form_input" placeholder="Title">
       {{#i18n}}{{errors.title}}{{/i18n}}<br>
     </div>
   </div>
@@ -19,7 +19,7 @@
 	<div class="form-group row form_row">
 		<div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
 			<label for="upload_file" class="form_label">{{i18n 'Add a recipe image'}}</label>
-			<input type="file" class="form-control form-control-lg form_input"  id="image" accept=".jpg, .jpeg, .png" class="form-control-file upload_file" required>
+			<input type="file" class="form-control form-control-lg form_input"  name="image" id="image" accept=".jpg, .jpeg, .png" class="form-control-file upload_file">
 			{{#i18n}}{{errors.image}}{{/i18n}}<br>
 		</div>
 	</div>
@@ -28,7 +28,7 @@
 	<div class="form-group row form_row">
 		<div class="col-lg-5 col-md-8 col-sm-7 col-xs-6">
 			<label for="form_content" class="form_label">{{i18n 'Content'}}</label>
-			<textarea class="form-control form_content form_input" id="content" rows="8" required></textarea>
+			<textarea class="form-control form_content form_input" id="content" rows="8"></textarea>
 			{{#i18n}}{{errors.content}}{{/i18n}}<br>
 		</div>
 	</div>
@@ -37,7 +37,7 @@
 	<div class="form-group row form_row">
 		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
 			<label for="form_time" class="form_label">{{i18n 'Preparation time'}}</label>
-			<input type="text" id="time" class="form-control form_input" placeholder="Estimated time..." required>
+			<input type="text" id="time" class="form-control form_input" placeholder="Estimated time...">
 			{{#i18n}}{{errors.time}}{{/i18n}}<br>
 		</div>
 	</div>
@@ -46,7 +46,7 @@
 	<div class="form-group row form_row">
 	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
 		<label for="form_date" class="form_label">{{i18n 'Date'}}</label>
-		<input type="date" id="date" class="form-control form_input" required>
+		<input type="date" id="date" class="form-control form_input">
 		{{#i18n}}{{errors.date}}{{/i18n}}<br>
 	</div>
 	</div>
