@@ -57,7 +57,7 @@ I18n.translations = {
   'Ingredient':'Ingrediente',
   'Amount':'Cantidad',
   'Add':'Añadir',
-  '':'',
+  'Remove':'Eliminar',
   '':'',
   '':'',
   '':'',
