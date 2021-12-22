@@ -1,15 +1,25 @@
 class PostAddComponent extends Fronty.ModelComponent {
   constructor(postsModel, userModel, router) {
-    super(Handlebars.templates.postadd, postsModel); //Cambiar postedit por postadd y añadir en appjs
+    super(Handlebars.templates.postadd, postsModel); 
     this.postsModel = postsModel; // posts
 
     this.userModel = userModel; // global
     this.addModel('user', userModel);
     this.router = router;
 
+    this.ingredientsModel = new IngredientsModel();
+    this.addModel('ingredients', this.ingredientsModel);
+
     var postsService = new PostsService();
 
-    //Obtencion y redireccionamiento a la carpeta /res de las imagenes subidas al crear una receta
+     postsService.findAllIngredients().then((data) => {
+      this.ingredientsModel.setIngredients(
+        // create a Fronty.Model for each item retrieved from the backend
+        data.map(
+          (item) => new IngredientModel(item.name)
+      ));
+    });
+
 
     this.addEventListener('click', '#savebutton', () => {
       var newPost = {};
@@ -41,9 +51,5 @@ class PostAddComponent extends Fronty.ModelComponent {
         });
    } //function
   });
-  }
-
-  onStart() {
-    this.postsModel.setSelectedPost(new PostModel());
   }
 }

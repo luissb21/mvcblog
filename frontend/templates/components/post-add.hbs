@@ -10,8 +10,8 @@
   <div class="form-group row form_row">
     <div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
       <label for="form_title" class="form_label">{{i18n 'Title'}}</label>
-      <input type="text" id="recipe" class="form-control form_input" placeholder="Title">
-      {{#i18n}}{{errors.title}}{{/i18n}}<br>
+      <input type="text" id="title" class="form-control form_input" placeholder="Title">
+      {{#i18n}}{{errors.title}}{{/i18n}}
     </div>
   </div>
 
@@ -20,7 +20,7 @@
 		<div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
 			<label for="upload_file" class="form_label">{{i18n 'Add a recipe image'}}</label>
 			<input type="file" class="form-control form-control-lg form_input"  name="image" id="image" accept=".jpg, .jpeg, .png" class="form-control-file upload_file">
-			{{#i18n}}{{errors.image}}{{/i18n}}<br>
+			{{#i18n}}{{errors.image}}{{/i18n}}
 		</div>
 	</div>
 
@@ -29,7 +29,7 @@
 		<div class="col-lg-5 col-md-8 col-sm-7 col-xs-6">
 			<label for="form_content" class="form_label">{{i18n 'Content'}}</label>
 			<textarea class="form-control form_content form_input" id="content" rows="8"></textarea>
-			{{#i18n}}{{errors.content}}{{/i18n}}<br>
+			{{#i18n}}{{errors.content}}{{/i18n}}
 		</div>
 	</div>
 
@@ -38,7 +38,7 @@
 		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
 			<label for="form_time" class="form_label">{{i18n 'Preparation time'}}</label>
 			<input type="text" id="time" class="form-control form_input" placeholder="Estimated time...">
-			{{#i18n}}{{errors.time}}{{/i18n}}<br>
+			{{#i18n}}{{errors.time}}{{/i18n}}
 		</div>
 	</div>
 
@@ -47,9 +47,51 @@
 	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
 		<label for="form_date" class="form_label">{{i18n 'Date'}}</label>
 		<input type="date" id="date" class="form-control form_input">
-		{{#i18n}}{{errors.date}}{{/i18n}}<br>
+		{{#i18n}}{{errors.date}}{{/i18n}}
 	</div>
 	</div>
+
+
+<!-- Ingredientes -->
+	<div class="container ingr_container">
+		<div class="row my-4">
+			<div class="mx-auto col-lg-12 col-md-10 col-sm-8 col-xs-7">
+				<div class="card shadow">
+					<div class="card-header">
+						<h4>{{i18n 'Add ingredients'}}</h4>
+					</div>
+					<div class="card-body p-4">
+						<div id="show_item">
+							<div class="row">
+								<div class="col-md-4 mb-3">
+									<input type="text" list="ingredients" name="ingredients[]" class="form-control form_input" placeholder="{{i18n 'Ingredient'}}">
+								</div>
+								{{log ingredients.ingredients}}
+								<!-- Datalist ingredients   -->
+								<datalist id="ingredients">
+									{{#if ingredients.ingredients.length}}
+										{{#each ingredients.ingredients}}
+											<option value="{{this.name}}">
+										{{/each}}
+									{{/if}}
+								</datalist>
+								<!-- Datalist ingredients   -->
+
+								<div class="col-md-3 mb-3">
+									<input type="text" name="cantidad[]" class="form-control form_input" placeholder="{{i18n 'Amount'}}">
+								</div>
+
+								<div class="col-md-2 mb-3 d-grid">
+									<button class="btn btn-success add_item_btn">{{i18n 'Add'}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
   <input type="button" id="savebutton" value="{{i18n 'Save'}}"></input>
 </div>

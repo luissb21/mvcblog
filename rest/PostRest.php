@@ -6,6 +6,12 @@ require_once(__DIR__."/../model/UserMapper.php");
 require_once(__DIR__."/../model/Post.php");
 require_once(__DIR__."/../model/PostMapper.php");
 
+require_once(__DIR__ . "/../model/Ingredient.php");
+require_once(__DIR__ . "/../model/IngredientMapper.php");
+
+require_once(__DIR__ . "/../model/Post_ingr.php");
+require_once(__DIR__ . "/../model/Post_ingrMapper.php");
+
 require_once(__DIR__."/BaseRest.php");
 
 /**
@@ -20,12 +26,13 @@ require_once(__DIR__."/BaseRest.php");
 */
 class PostRest extends BaseRest {
 	private $postMapper;
-	private $commentMapper;
 
 	public function __construct() {
 		parent::__construct();
 
 		$this->postMapper = new PostMapper();
+		$this->ingredientMapper = new IngredientMapper();
+
 	}
 
 //function getPost(): Retorna a la vista principal (HOME) o bien los ultimos 12 post de la BD si el usuario 
@@ -104,13 +111,6 @@ class PostRest extends BaseRest {
 
 			file_put_contents('../res/' . $data->image, base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data->imgb64)));
 
-			// Get image name
-			//$image = $_FILES['image']['name'];
-			//$post->setImage($image);
-			// image file directory
-		 	//$target = "res/" . basename($image);
-			//move_uploaded_file($_FILES['image']['tmp_name'], $target);
-
 		}
 
 		try {
@@ -142,7 +142,7 @@ class PostRest extends BaseRest {
 	}
 
 
-
+//function readPost: Visualizacion en detalle de un Post
 	public function readPost($postId) {
 		// find the Post object in the database
 		$post = $this->postMapper->findById($postId);
@@ -153,10 +153,13 @@ class PostRest extends BaseRest {
 		}
 
 		$post_array = array(
-			"id" => $post->getId(),
-			"title" => $post->getTitle(),
-			"content" => $post->getContent(),
-			"author" => $post->getAuthor()->getusername()
+			"id"=>$postId,
+				"title"=>$post->getTitle(),
+				"content" => $post->getContent(),
+				"author" => $post->getAuthor(),
+				"time" => $post->getTime(),
+				"date" => $post->getDate(),
+				"image" => $post->getImage()
 
 		);
 
@@ -164,6 +167,8 @@ class PostRest extends BaseRest {
 		header('Content-Type: application/json');
 		echo(json_encode($post_array));
 	}
+
+
 
 	public function updatePost($postId, $data) {
 		$currentUser = parent::authenticateUser();
@@ -219,6 +224,26 @@ class PostRest extends BaseRest {
 	}
 
 	
+
+	public function findAllIngredients() {
+		$ingredients = $this->ingredientMapper->findAllIngredients();
+		//var_dump("Entra en el finAllIngrdients");
+		//var_dump($ingredients);
+		$ingredients_array = array();
+		foreach($ingredients as $ingredient){
+			array_push($ingredients_array, array(
+				"name" => $ingredient->getName()
+			));
+		}
+
+	  	header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+	  	header('Content-Type: application/json');
+	 	echo(json_encode($ingredients_array));
+		 
+	  }
+
+
+
 }
 
 // URI-MAPPING for this Rest endpoint
@@ -227,6 +252,6 @@ URIDispatcher::getInstance()
 ->map("GET",	"/post", array($postRest,"getPosts"))
 ->map("GET",	"/post/$1", array($postRest,"readPost"))
 ->map("POST", "/post", array($postRest,"createPost"))
-->map("POST", "/post/$1/comment", array($postRest,"createComment"))
+->map("GET", "/ingredients", array($postRest,"findAllIngredients"))
 ->map("PUT",	"/post/$1", array($postRest,"updatePost"))
 ->map("DELETE", "/post/$1", array($postRest,"deletePost"));

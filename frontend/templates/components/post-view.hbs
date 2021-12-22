@@ -1,5 +1,50 @@
 <div>
-  <h2>{{selectedPost.title}}</h2> {{i18n 'by'}} {{selectedPost.author}}
-  <div>{{selectedPost.content}}</div>
- 
+
+  <div class="container py-5 text-center">
+    <h1 class="h1_myrecipes">
+      {{i18n 'Recipe'}}: {{selectedPost.title}}
+    </h1>
+    <h6 class="h6_myrecipes">
+      {{i18n 'by'}} {{selectedPost.author}}
+    </h6>
+  </div>
+
+  <div class="margincont">
+    <!-- Fotografia -->
+    <div class="form-group row form_row">
+      <div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
+        <label for="form_content" class="form_label">{{i18n 'Image'}}</label>
+        <img class="actual_image img-fluid" src="../res/{{selectedPost.image}}" name="old_file"></img>
+        <!-- Me gusta-->
+      </div>
+    </div>
+
+<!-- Ingredientes -->
+
+<!-- Tiempo de preparación de la receta -->
+<div class="form-group row form_row">
+<div class="col-lg-1 col-md-3 col-sm-3 col-xs-3">
+<label for="form_content" class="form_label">{{i18n 'Preparation time'}}</label>
+	<p class="p_view">{{selectedPost.time}}</p>
+</div>
+</div>
+
+<!-- Fecha de subida de la receta -->
+<div class="form-group row form_row">
+<div class="col-lg-1 col-md-3 col-sm-3 col-xs-3">
+<label for="form_content" class="form_label">{{i18n 'Date'}}</label>
+	<p class="p_view">{{selectedPost.date}}</p>
+</div>
+</div>
+
+<!-- Contenido de la receta -->
+<div class="form-group row form_row">
+<div class="col-lg-5 col-md-8 col-sm-7 col-xs-6">
+<label for="form_content" class="form_label">{{i18n 'Content'}}</label>
+	<p class="p_view">{{selectedPost.content}}</p>
+</div>
+</div>
+
+
+  </div>
 </div>

@@ -7,6 +7,11 @@ class PostsService {
     return $.get(AppConfig.backendServer+'/rest/post');
   }
 
+  findAllIngredients() {
+    return $.get(AppConfig.backendServer+'/rest/ingredients');
+  }
+
+
   findPost(id) {
     return $.get(AppConfig.backendServer+'/rest/post/' + id);
   }
@@ -36,13 +41,15 @@ class PostsService {
     });
   }
 
-  createComment(postid, comment) {
-    return $.ajax({
-      url: AppConfig.backendServer+'/rest/post/' + postid + '/comment',
-      method: 'POST',
-      data: JSON.stringify(comment),
-      contentType: 'application/json'
-    });
-  }
+  // createComment(postid, comment) {
+  //   return $.ajax({
+  //     url: AppConfig.backendServer+'/rest/post/' + postid + '/comment',
+  //     method: 'POST',
+  //     data: JSON.stringify(comment),
+  //     contentType: 'application/json'
+  //   });
+  // }
+
+  
 
 }

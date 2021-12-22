@@ -4,11 +4,10 @@ require_once(__DIR__ . "/../core/PDOConnection.php");
 
 require_once(__DIR__ . "/../model/User.php");
 require_once(__DIR__ . "/../model/Post.php");
-//require_once(__DIR__ . "/../model/Ingredient.php");
-//require_once(__DIR__ . "/../model/Post_ingr.php");
+require_once(__DIR__ . "/../model/Ingredient.php");
+require_once(__DIR__ . "/../model/Post_ingr.php");
 //require_once(__DIR__ . "/../model/Post_like.php");
 //require_once(__DIR__ . "/../model/Post_likeMapper.php");
-//require_once(__DIR__."/../model/ingredient.php");
 
 /**
  * Class PostMapper
@@ -54,6 +53,18 @@ class PostMapper
 		return $posts;
 	}
 
+	public function findAllIngredients() {
+		$stmt = $this->db->query("SELECT * FROM ingredients"); 
+		$ingredients_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$ingredients = array();
+
+		foreach ($ingredients_db as $ingredient) {
+			array_push($ingredients, new Ingredient($ingredient["name"]));
+		}
+
+		return $ingredients;
+	}
 
 	public function findAll12()//TODO USERNAME?
 	{
