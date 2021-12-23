@@ -32,6 +32,10 @@ class PostAddComponent extends Fronty.ModelComponent {
       
       var reader = new FileReader();
       reader.readAsDataURL(document.getElementById('image').files[0]);
+
+      console.log(document.getElementById('ingredients[]'));
+      newPost.ingredients = document.getElementById('ingredients[]');
+
       reader.onload = function () {
         newPost.imgb64 = reader.result;
       

@@ -166,6 +166,22 @@ class PostMapper
 
 		}
 
+		public function findLastIdPlus() //Devuelve el id del ultimo Post +1
+	{
+		$stmt = $this->db->query(
+			"SELECT posts.id FROM posts ORDER BY posts.id DESC LIMIT 1"
+		);
+		
+		$posts_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$id = $posts_db[0]["id"];
+
+		$id = $id + 1;
+
+		return $id;
+
+		}
+
 	/**
 	 * Loads a Post from the database given its id
 	 *

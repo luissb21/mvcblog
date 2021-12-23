@@ -64,9 +64,8 @@
 						<div id="show_item">
 							<div class="row">
 								<div class="col-md-4 mb-3">
-									<input type="text" list="ingredients" name="ingredients[]" class="form-control form_input" placeholder="{{i18n 'Ingredient'}}">
+									<input type="text" list="ingredients" id="ingredients[]" class="form-control form_input" placeholder="{{i18n 'Ingredient'}}">
 								</div>
-								{{log ingredients.ingredients}}
 								<!-- Datalist ingredients   -->
 								<datalist id="ingredients">
 									{{#if ingredients.ingredients.length}}
@@ -78,7 +77,7 @@
 								<!-- Datalist ingredients   -->
 
 								<div class="col-md-3 mb-3">
-									<input type="text" name="cantidad[]" class="form-control form_input" placeholder="{{i18n 'Amount'}}">
+									<input type="text" id="cantidad[]" class="form-control form_input" placeholder="{{i18n 'Amount'}}">
 								</div>
 
 								<div class="col-md-2 mb-3 d-grid">

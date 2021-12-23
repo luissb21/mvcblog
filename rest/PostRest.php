@@ -99,7 +99,7 @@ class PostRest extends BaseRest {
 //function createPost: Crea una receta nueva en la BD
 	public function createPost($data) {
 		$post = new Post();
-		//var_dump($data);
+		$lastId = $this->postMapper->findLastIdPlus();
 
 		if (isset($data->title) && isset($data->content) && isset($data->author) && isset($data->time) && isset($data->date) && isset($data->image)) {
 			$post->setTitle($data->title);
@@ -107,9 +107,9 @@ class PostRest extends BaseRest {
 			$post->setAuthor($data->author);
 			$post->setTime($data->time);
 			$post->setDate($data->date);
-			$post->setImage($data->image);
+			$post->setImage($lastId . $data->image);
 
-			file_put_contents('../res/' . $data->image, base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data->imgb64)));
+			file_put_contents('../res/' . $lastId . $data->image, base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data->imgb64)));
 
 		}
 
