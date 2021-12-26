@@ -20,6 +20,18 @@
     </div>
 
 <!-- Ingredientes -->
+<div class="form-group row form_row">
+<label for="form_content" class="form_label">{{i18n 'Ingredients'}}</label>
+	<hr>
+  {{!-- {{log selectedPost.ingredients}} --}}
+	{{#each selectedPost.ingredients}}
+		<div class="row">
+			<p class="p_view"><b>{{this.ingr_name}}</b> {{this.cantidad}}</p class="p_view">
+		</div>
+	{{/each}}
+</div>
+{{!-- <?= $ingredient->getIngr_name(); {{this.image}} ?>:
+ <?= $ingredient->getCantidad(); ?> --}} 
 
 <!-- Tiempo de preparación de la receta -->
 <div class="form-group row form_row">

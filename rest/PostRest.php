@@ -32,6 +32,7 @@ class PostRest extends BaseRest {
 
 		$this->postMapper = new PostMapper();
 		$this->ingredientMapper = new IngredientMapper();
+		$this->post_ingrMapper = new Post_ingrMapper();
 
 	}
 
@@ -99,6 +100,8 @@ class PostRest extends BaseRest {
 //function createPost: Crea una receta nueva en la BD
 	public function createPost($data) {
 		$post = new Post();
+		$post_ingr = new Post_ingr();
+		$ingr = new Ingredient();
 		$lastId = $this->postMapper->findLastIdPlus();
 
 		if (isset($data->title) && isset($data->content) && isset($data->author) && isset($data->time) && isset($data->date) && isset($data->image)) {
@@ -119,6 +122,30 @@ class PostRest extends BaseRest {
 
 			// save the Post object into the database
 			$postId = $this->postMapper->save($post);
+
+			//INGREDIENTES Y CANTIDADES
+			$array_ingr = array();
+			$array_cant = array();
+			$array_ingr = $data->ingredients;	//Guardamos el array de ingredientes (text)
+			//var_dump($data->ingredients);
+			$array_cant = $data->amounts;		//Guardamos el array de cantidades	(text)
+			//var_dump($data->amounts);
+			//var_dump(count($array_ingr));
+			$i = 0;
+
+				foreach ($array_ingr as $ingredient) {
+					if (!($this->ingredientMapper->existsIngredients($ingredient))) {
+						$ingr->setName($ingredient);
+						$this->ingredientMapper->save($ingr);
+					}
+					$post_ingr->setPost_id($this->postMapper->findLastId());
+					$post_ingr->setIngr_name($ingredient);
+					$post_ingr->setCantidad($array_cant[$i]);
+					$this->post_ingrMapper->save($post_ingr); //Guardamos un Post_like con post.id , ingredients(text), cantidad(text)
+					$i++;
+				}
+
+			//INGREDIENTES Y CANTIDADES
 
 			// response OK. Also send post in content
 			header($_SERVER['SERVER_PROTOCOL'].' 201 Created');
@@ -145,11 +172,20 @@ class PostRest extends BaseRest {
 //function readPost: Visualizacion en detalle de un Post
 	public function readPost($postId) {
 		// find the Post object in the database
-		$post = $this->postMapper->findById($postId);
+		$post = $this->postMapper->findByIdWithIngredients($postId); //setea los Post_Ingr en el metodo
 		if ($post == NULL) {
 			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
 			echo("Post with id ".$postId." not found");
 			return;
+		}
+
+		$ingredients = $post->getIngredients(); //Objetos Post_Ingr
+		$post_ingr_array = array();
+		foreach($ingredients as $ingredient){
+			array_push($post_ingr_array, array(
+				"ingr_name" => $ingredient->getIngr_name(),
+				"cantidad" => $ingredient->getCantidad()
+			));
 		}
 
 		$post_array = array(
@@ -159,9 +195,15 @@ class PostRest extends BaseRest {
 				"author" => $post->getAuthor(),
 				"time" => $post->getTime(),
 				"date" => $post->getDate(),
-				"image" => $post->getImage()
+				"image" => $post->getImage(),
+				"ingredients" => $post_ingr_array
 
 		);
+
+		
+
+		//var_dump($post->getIngredients());
+		//var_dump($post_array);		
 
 		header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
 		header('Content-Type: application/json');
