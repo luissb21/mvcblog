@@ -12,6 +12,9 @@ require_once(__DIR__ . "/../model/IngredientMapper.php");
 require_once(__DIR__ . "/../model/Post_ingr.php");
 require_once(__DIR__ . "/../model/Post_ingrMapper.php");
 
+require_once(__DIR__ . "/../model/Post_like.php");
+require_once(__DIR__ . "/../model/Post_likeMapper.php");
+
 require_once(__DIR__."/BaseRest.php");
 
 /**
@@ -33,6 +36,7 @@ class PostRest extends BaseRest {
 		$this->postMapper = new PostMapper();
 		$this->ingredientMapper = new IngredientMapper();
 		$this->post_ingrMapper = new Post_ingrMapper();
+		$this->post_likeMapper = new Post_likeMapper();
 
 	}
 
@@ -260,12 +264,14 @@ class PostRest extends BaseRest {
 			return;
 		}
 		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $currentUser) {
+		if ($post->getAuthor() != $currentUser->getUsername()) {
 			header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
 			echo("you are not the author of this post");
 			return;
 		}
 
+		$this->post_ingrMapper->deleteAllIngredients($post);
+		$this->post_likeMapper->deleteLikes($post);
 		$this->postMapper->delete($post);
 
 		header($_SERVER['SERVER_PROTOCOL'].' 204 No Content');

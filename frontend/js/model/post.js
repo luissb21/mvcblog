@@ -1,6 +1,6 @@
 class PostModel extends Fronty.Model {
 
-  constructor(id, title, content,author,time,date,image,imgb64,ingredients,amounts) {
+  constructor(id,title,content,author,time,date,image,imgb64,ingredients,amounts) {
     super('PostModel'); //call super
     
     if (id) {
