@@ -1,9 +1,65 @@
 <div>
-  {{i18n 'Title'}}:<input type="text" id="title" value="{{selectedPost.title}}">
-  {{#i18n}}{{errors.title}}{{/i18n}}<br> {{i18n 'Content'}}:
-  <br>
-  <textarea id="content" rows="20" cols="80">{{selectedPost.content}}</textarea>
-  {{#i18n}}{{errors.content}}{{/i18n}}
-  <br>
+
+  <div class="container py-5 text-center">
+    <h1 class="h1_myrecipes">{{i18n 'Edit Recipe'}}</h1>
+    <h6 class="h6_myrecipes">{{i18n 'Make the necessary changes'}}</h6>
+  </div>
+
+
+  <!-- Titulo de la receta -->
+  <div class="form-group row form_row">
+    <div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
+      <label for="form_title" class="form_label">{{i18n 'Title'}}</label>
+      <input type="text" id="title" class="form-control form_input" value="{{selectedPost.title}}"></input>
+      {{#i18n}}{{errors.title}}{{/i18n}}
+    </div>
+  </div>
+
+<!-- Fotografia actual -->
+	<div class="form-group row form_row">
+      <div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
+        <label for="form_content" class="form_label">{{i18n 'Actual image'}}</label>
+        <img class="actual_image img-fluid" src="../res/{{selectedPost.image}}" name="old_file"></img>
+        <!-- Me gusta-->
+      </div>
+    </div>
+
+  	<!-- Subir fotografia de la receta -->
+	<div class="form-group row form_row">
+		<div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
+			<label for="upload_file" class="form_label">{{i18n 'New recipe´s image'}}</label>
+			<input type="file" class="form-control form-control-lg form_input"  name="image" id="image" accept=".jpg, .jpeg, .png"></input>
+			{{#i18n}}{{errors.image}}{{/i18n}}
+		</div>
+	</div>
+
+<!-- Contenido de la receta -->
+	<div class="form-group row form_row">
+		<div class="col-lg-5 col-md-8 col-sm-7 col-xs-6">
+			<label for="form_content" class="form_label">{{i18n 'Content'}}</label>
+			<textarea class="form-control form_content form_input" id="content" rows="8" value="{{selectedPost.content}}"></textarea>
+			{{#i18n}}{{errors.content}}{{/i18n}}
+		</div>
+	</div>
+
+  <!-- Tiempo de preparación de la receta -->
+	<div class="form-group row form_row">
+		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+			<label for="form_time" class="form_label">{{i18n 'Preparation time'}}</label>
+			<input type="text" id="time" class="form-control form_input" value="{{selectedPost.time}}"></input>
+			{{#i18n}}{{errors.time}}{{/i18n}}
+		</div>
+	</div>
+
+<!-- Fecha de la receta -->
+	<div class="form-group row form_row">
+	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+		<label for="form_date" class="form_label">{{i18n 'Date'}}</label>
+		<input type="date" id="date" class="form-control form_input" value="{{selectedPost.date}}"></input>
+		{{#i18n}}{{errors.date}}{{/i18n}}
+	</div>
+	</div>
+
   <input type="button" id="savebutton" value="{{i18n 'Save'}}"></input>
 </div>
+

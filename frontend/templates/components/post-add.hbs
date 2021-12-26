@@ -10,7 +10,7 @@
   <div class="form-group row form_row">
     <div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
       <label for="form_title" class="form_label">{{i18n 'Title'}}</label>
-      <input type="text" id="title" class="form-control form_input" placeholder="Title">
+      <input type="text" id="title" class="form-control form_input" placeholder="Title"></input>
       {{#i18n}}{{errors.title}}{{/i18n}}
     </div>
   </div>
@@ -19,7 +19,7 @@
 	<div class="form-group row form_row">
 		<div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
 			<label for="upload_file" class="form_label">{{i18n 'Add a recipe image'}}</label>
-			<input type="file" class="form-control form-control-lg form_input"  name="image" id="image" accept=".jpg, .jpeg, .png" class="form-control-file upload_file">
+			<input type="file" class="form-control form-control-lg form_input"  name="image" id="image" accept=".jpg, .jpeg, .png"></input>
 			{{#i18n}}{{errors.image}}{{/i18n}}
 		</div>
 	</div>
@@ -37,7 +37,7 @@
 	<div class="form-group row form_row">
 		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
 			<label for="form_time" class="form_label">{{i18n 'Preparation time'}}</label>
-			<input type="text" id="time" class="form-control form_input" placeholder="Estimated time...">
+			<input type="text" id="time" class="form-control form_input" placeholder="Estimated time..."></input>
 			{{#i18n}}{{errors.time}}{{/i18n}}
 		</div>
 	</div>
@@ -46,7 +46,7 @@
 	<div class="form-group row form_row">
 	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
 		<label for="form_date" class="form_label">{{i18n 'Date'}}</label>
-		<input type="date" id="date" class="form-control form_input">
+		<input type="date" id="date" class="form-control form_input"></input>
 		{{#i18n}}{{errors.date}}{{/i18n}}
 	</div>
 	</div>
@@ -64,20 +64,20 @@
 						<div id="show_item">
 							<div class="row">
 								<div class="col-md-4 mb-3">
-									<input type="text" list="ingredientsList" name="ingredients[]" class="form-control form_input" placeholder="{{i18n 'Ingredient'}}">
+									<input type="text" list="ingredientsList" name="ingredients[]" class="form-control form_input" placeholder="{{i18n 'Ingredient'}}"></input>
 								</div>
 								<!-- Datalist ingredients   -->
 								<datalist id="ingredientsList">
 									{{#if ingredients.ingredients.length}}
 										{{#each ingredients.ingredients}}
-											<option value="{{this.name}}">
+											<option value="{{this.name}}"></option>
 										{{/each}}
 									{{/if}}
 								</datalist>
 								<!-- Datalist ingredients   -->
 
 								<div class="col-md-3 mb-3">
-									<input type="text" name="cantidad[]" class="form-control form_input" placeholder="{{i18n 'Amount'}}">
+									<input type="text" name="cantidad[]" class="form-control form_input" placeholder="{{i18n 'Amount'}}"></input>
 								</div>
 
 								<div class="col-md-2 mb-3 d-grid">

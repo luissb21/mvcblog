@@ -59,10 +59,10 @@ I18n.translations = {
   'Add':'Añadir',
   'Remove':'Eliminar',
   'Ingredients':'Ingredientes',
-  '':'',
-  '':'',
-  '':'',
-  '':'',
+  'Edit Recipe':'Editar Receta',
+  'Make the necessary changes':'Haz lo cambios necesarios',
+  'Actual image':'Fotografía actual',
+  'New recipe´s image':'Nueva imagen de la receta',
   '':'',
 
 

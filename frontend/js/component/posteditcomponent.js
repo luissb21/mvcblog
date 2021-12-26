@@ -5,30 +5,44 @@ class PostEditComponent extends Fronty.ModelComponent {
     this.userModel = userModel; // global
     this.addModel('user', userModel);
     this.router = router;
+    var router = router;
 
     this.postsService = new PostsService();
-
+    var postsService = new PostsService();
+    var postsModel = postsModel;
+    
     this.addEventListener('click', '#savebutton', () => {
-      this.postsModel.selectedPost.title = $('#title').val();
-      this.postsModel.selectedPost.content = $('#content').val();
-      this.postsService.savePost(this.postsModel.selectedPost)
+      postsModel.selectedPost.title = $('#title').val();
+      postsModel.selectedPost.content = $('#content').val();
+      postsModel.selectedPost.time = $('#time').val();
+      postsModel.selectedPost.date = $('#date').val();
+      postsModel.selectedPost.image = document.getElementById('image').files[0].name;
+
+      var reader = new FileReader();
+      reader.readAsDataURL(document.getElementById('image').files[0]);
+
+      reader.onload = function () {
+        postsModel.selectedPost.imgb64 = reader.result;
+
+      postsService.savePost(postsModel.selectedPost)
         .then(() => {
-          this.postsModel.set((model) => {
+          postsModel.set((model) => {
             model.errors = []
           });
-          this.router.goToPage('posts');
+          router.goToPage('posts');
         })
         .fail((xhr, errorThrown, statusText) => {
           if (xhr.status == 400) {
-            this.postsModel.set((model) => {
+            postsModel.set((model) => {
               model.errors = xhr.responseJSON;
             });
           } else {
             alert('an error has occurred during request: ' + statusText + '.' + xhr.responseText);
           }
         });
-
+      }
     });
+    
   }
 
   onStart() {

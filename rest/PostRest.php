@@ -221,9 +221,10 @@ class PostRest extends BaseRest {
 			echo("Post with id ".$postId." not found");
 			return;
 		}
-
+		//var_dump($post->getAuthor());
+		//var_dump($currentUser->getUsername());
 		// Check if the Post author is the currentUser (in Session)
-		if ($post->getAuthor() != $currentUser) {
+		if ($post->getAuthor() != $currentUser->getUsername()) {
 			header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
 			echo("you are not the author of this post");
 			return;
@@ -231,6 +232,11 @@ class PostRest extends BaseRest {
 		$post->setTitle($data->title);
 		$post->setContent($data->content);
 		$post->setAuthor($data->author);
+		$post->setTime($data->time);
+		$post->setDate($data->date);
+		$post->setImage($postId . $data->image . 'edit');
+
+		file_put_contents('../res/' . $postId . $data->image  . 'edit', base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data->imgb64)));
 
 		try {
 			// validate Post object
