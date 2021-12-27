@@ -11,6 +11,9 @@ class PostsService {
     return $.get(AppConfig.backendServer+'/rest/ingredients');
   }
 
+  findRecipeIngredients(id) {
+    return $.get(AppConfig.backendServer+'/rest/recingr/' + id);
+  }
 
   findPost(id) {
     return $.get(AppConfig.backendServer+'/rest/post/' + id);

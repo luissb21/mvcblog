@@ -1,48 +1,50 @@
 <div>
 
-  <div class="container py-5 text-center">
-    <h1 class="h1_myrecipes">{{i18n 'Edit Recipe'}}</h1>
-    <h6 class="h6_myrecipes">{{i18n 'Make the necessary changes'}}</h6>
-  </div>
+	<div class="container py-5 text-center">
+		<h1 class="h1_myrecipes">{{i18n 'Edit Recipe'}}</h1>
+		<h6 class="h6_myrecipes">{{i18n 'Make the necessary changes'}}</h6>
+	</div>
 
 
-  <!-- Titulo de la receta -->
-  <div class="form-group row form_row">
-    <div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
-      <label for="form_title" class="form_label">{{i18n 'Title'}}</label>
-      <input type="text" id="title" class="form-control form_input" value="{{selectedPost.title}}"></input>
-      {{#i18n}}{{errors.title}}{{/i18n}}
-    </div>
-  </div>
-
-<!-- Fotografia actual -->
+	<!-- Titulo de la receta -->
 	<div class="form-group row form_row">
-      <div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
-        <label for="form_content" class="form_label">{{i18n 'Actual image'}}</label>
-        <img class="actual_image img-fluid" src="../res/{{selectedPost.image}}" name="old_file"></img>
-        <!-- Me gusta-->
-      </div>
-    </div>
+		<div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
+			<label for="form_title" class="form_label">{{i18n 'Title'}}</label>
+			<input type="text" id="title" class="form-control form_input" value="{{selectedPost.title}}"></input>
+			{{#i18n}}{{errors.title}}{{/i18n}}
+		</div>
+	</div>
 
-  	<!-- Subir fotografia de la receta -->
+	<!-- Fotografia actual -->
+	<div class="form-group row form_row">
+		<div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
+			<label for="form_content" class="form_label">{{i18n 'Actual image'}}</label>
+			<img class="actual_image img-fluid" src="../res/{{selectedPost.image}}" name="old_file"></img>
+			<!-- Me gusta-->
+		</div>
+	</div>
+
+	<!-- Subir fotografia de la receta -->
 	<div class="form-group row form_row">
 		<div class="col-lg-2 col-md-5 col-sm-5 col-xs-6">
 			<label for="upload_file" class="form_label">{{i18n 'New recipe´s image'}}</label>
-			<input type="file" class="form-control form-control-lg form_input"  name="image" id="image" accept=".jpg, .jpeg, .png"></input>
+			<input type="file" class="form-control form-control-lg form_input" name="image" id="image"
+				accept=".jpg, .jpeg, .png"></input>
 			{{#i18n}}{{errors.image}}{{/i18n}}
 		</div>
 	</div>
 
-<!-- Contenido de la receta -->
+	<!-- Contenido de la receta -->
 	<div class="form-group row form_row">
 		<div class="col-lg-5 col-md-8 col-sm-7 col-xs-6">
 			<label for="form_content" class="form_label">{{i18n 'Content'}}</label>
-			<textarea class="form-control form_content form_input" id="content" rows="8" value="{{selectedPost.content}}"></textarea>
+			<textarea class="form-control form_content form_input" id="content" rows="8"
+				value="{{selectedPost.content}}"></textarea>
 			{{#i18n}}{{errors.content}}{{/i18n}}
 		</div>
 	</div>
 
-  <!-- Tiempo de preparación de la receta -->
+	<!-- Tiempo de preparación de la receta -->
 	<div class="form-group row form_row">
 		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
 			<label for="form_time" class="form_label">{{i18n 'Preparation time'}}</label>
@@ -51,15 +53,58 @@
 		</div>
 	</div>
 
-<!-- Fecha de la receta -->
+	<!-- Fecha de la receta -->
 	<div class="form-group row form_row">
-	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
-		<label for="form_date" class="form_label">{{i18n 'Date'}}</label>
-		<input type="date" id="date" class="form-control form_input" value="{{selectedPost.date}}"></input>
-		{{#i18n}}{{errors.date}}{{/i18n}}
-	</div>
+		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+			<label for="form_date" class="form_label">{{i18n 'Date'}}</label>
+			<input type="date" id="date" class="form-control form_input" value="{{selectedPost.date}}"></input>
+			{{#i18n}}{{errors.date}}{{/i18n}}
+		</div>
 	</div>
 
-  <input type="button" id="savebutton" value="{{i18n 'Save'}}"></input>
+	<!-- Ingredientes -->
+	<div class="container ingr_container">
+		<div class="row my-4">
+			<div class="mx-auto col-lg-12 col-md-10 col-sm-8 col-xs-7">
+				<div class="card shadow">
+					<div class="card-header">
+						<h4>{{i18n 'Add ingredients'}}</h4>
+					</div>
+					<div class="card-body p-4">
+						<div id="show_item">		
+						<!-- EACH POST_INGR-->{{#each tuplas.tuplas}}
+							<div class="row">
+								<div class="col-md-4 mb-3">
+									<input type="text" list="ingredientsList" name="ingredients[]" class="form-control form_input" value="{{this.ingr_name}}"></input>
+								</div>
+
+								<div class="col-md-3 mb-3">
+									<input type="text" name="cantidad[]" class="form-control form_input" value="{{this.cantidad}}"></input>
+								</div>
+
+								<div class="col-md-2 mb-3 d-grid">
+									<button class="btn btn-success add_item_btn">{{i18n 'Add'}}</button>
+								</div>
+								<!-- Final Class = "row"  -->
+							</div>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Datalist ingredients   -->
+	<datalist id="ingredientsList">
+		{{#if ingredients.ingredients.length}}
+		{{#each ingredients.ingredients}}
+		<option value="{{this.name}}"></option>
+		{{/each}}
+		{{/if}}
+	</datalist>
+	<!-- Datalist ingredients   -->
+	
+
+	<input type="button" id="savebutton" value="{{i18n 'Save'}}"></input>
 </div>
-

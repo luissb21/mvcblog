@@ -216,9 +216,9 @@ class PostRest extends BaseRest {
 
 
 
+	//function updatePost: Modificiación de los datos de un Post
 	public function updatePost($postId, $data) {
 		$currentUser = parent::authenticateUser();
-
 		$post = $this->postMapper->findById($postId);
 		if ($post == NULL) {
 			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
@@ -246,6 +246,41 @@ class PostRest extends BaseRest {
 			// validate Post object
 			$post->checkIsValidForUpdate(); // if it fails, ValidationException
 			$this->postMapper->update($post);
+			//INGREDIENTES
+			/*
+			$post_ingr = new Post_ingr();
+			$ingr = new Ingredient();
+			$ingrs_cant = $this->post_ingrMapper->findIngrendietsRecipes($postId);
+
+			$array_ingr = array();
+			$array_cant = array();
+			$array_ingr = $data->ingredients;	//Guardamos el array de ingredientes (text)
+			$array_cant = $data->amounts;		//Guardamos el array de cantidades	(text)
+			$i = 0;
+			$j = 0;
+			$array_nuevo = array();
+
+			foreach ($array_ingr as $ingredient) {
+				array_push($array_nuevo, new Post_ingr($postId, $ingredient, $array_cant[$i])); //Creamos un array con los nuevos Post_ingr recibidos en el input
+				$i++;
+			}
+			if (!($array_nuevo == $ingrs_cant)) {
+				$this->post_ingrMapper->deleteAllIngredients($post);
+				foreach ($array_ingr as $ingredient) {
+					if (!($this->IngredientMapper->existsIngredients($ingredient))) {
+						$ingr->setName($ingredient);
+						$this->IngredientMapper->save($ingr);
+					}
+					$post_ingr->setPost_id($postId);
+					$post_ingr->setIngr_name($ingredient);
+					$post_ingr->setCantidad($array_cant[$j]);
+					$this->post_ingrMapper->save($post_ingr); //Guardamos un Post_like con post.id , ingredients(text), cantidad(text)
+					$j++;
+				}
+			}
+			*/
+			//INGREDIENTES
+
 			header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
 		}catch (ValidationException $e) {
 			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad request');
@@ -254,6 +289,8 @@ class PostRest extends BaseRest {
 		}
 	}
 
+
+	//function deletePost: Elimina un Post de la BD
 	public function deletePost($postId) {
 		$currentUser = parent::authenticateUser();
 		$post = $this->postMapper->findById($postId);
@@ -296,6 +333,24 @@ class PostRest extends BaseRest {
 		 
 	  }
 
+	  public function findRecipeIngredients($postid) {
+		$post_ingrs = $this->post_ingrMapper->findIngrendietsRecipes($postid);	//Tuplas post-ingrediente-cantidad
+		$recipe_ingrs_array = array();
+
+		foreach($post_ingrs as $post_ingr){
+			array_push($recipe_ingrs_array, array(
+				"ingr_name" => $post_ingr->getIngr_name(),
+				"cantidad" => $post_ingr->getCantidad()
+			));
+		}
+
+		//var_dump($recipe_ingrs_array);
+	  	header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+	  	header('Content-Type: application/json');
+	 	echo(json_encode($recipe_ingrs_array));
+		 
+	  }
+
 
 
 }
@@ -307,5 +362,6 @@ URIDispatcher::getInstance()
 ->map("GET",	"/post/$1", array($postRest,"readPost"))
 ->map("POST", "/post", array($postRest,"createPost"))
 ->map("GET", "/ingredients", array($postRest,"findAllIngredients"))
+->map("GET", "/recingr/$1", array($postRest,"findRecipeIngredients"))
 ->map("PUT",	"/post/$1", array($postRest,"updatePost"))
 ->map("DELETE", "/post/$1", array($postRest,"deletePost"));
