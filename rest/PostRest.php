@@ -247,7 +247,7 @@ class PostRest extends BaseRest {
 			$post->checkIsValidForUpdate(); // if it fails, ValidationException
 			$this->postMapper->update($post);
 			//INGREDIENTES
-			/*
+			
 			$post_ingr = new Post_ingr();
 			$ingr = new Ingredient();
 			$ingrs_cant = $this->post_ingrMapper->findIngrendietsRecipes($postId);
@@ -267,9 +267,9 @@ class PostRest extends BaseRest {
 			if (!($array_nuevo == $ingrs_cant)) {
 				$this->post_ingrMapper->deleteAllIngredients($post);
 				foreach ($array_ingr as $ingredient) {
-					if (!($this->IngredientMapper->existsIngredients($ingredient))) {
+					if (!($this->ingredientMapper->existsIngredients($ingredient))) {
 						$ingr->setName($ingredient);
-						$this->IngredientMapper->save($ingr);
+						$this->ingredientMapper->save($ingr);
 					}
 					$post_ingr->setPost_id($postId);
 					$post_ingr->setIngr_name($ingredient);
@@ -278,7 +278,7 @@ class PostRest extends BaseRest {
 					$j++;
 				}
 			}
-			*/
+			
 			//INGREDIENTES
 
 			header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

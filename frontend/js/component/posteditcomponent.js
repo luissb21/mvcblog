@@ -35,6 +35,14 @@ class PostEditComponent extends Fronty.ModelComponent {
       postsModel.selectedPost.time = $('#time').val();
       postsModel.selectedPost.date = $('#date').val();
       postsModel.selectedPost.image = document.getElementById('image').files[0].name;
+      //Ingredientes con Cantidades
+      postsModel.selectedPost.ingredients = $("input[name='ingredients[]']").map(function (idx, elem){
+        return $(elem).val();
+      }).get();
+
+      postsModel.selectedPost.amounts = $("input[name='cantidad[]']").map(function (idx, elem){
+        return $(elem).val();
+      }).get();
 
       var reader = new FileReader();
       reader.readAsDataURL(document.getElementById('image').files[0]);
