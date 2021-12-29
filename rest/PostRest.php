@@ -352,6 +352,27 @@ class PostRest extends BaseRest {
 	  }
 
 
+	  public function findMyRecipes() {
+		$currentUser = parent::authenticateUser();	
+			$posts = $this->postMapper->findByAuthor($currentUser->getUsername());
+			$posts_array = array();
+				foreach($posts as $post) {
+					array_push($posts_array, array(
+					  "id" => $post->getId(),
+					  "title" => $post->getTitle(),
+					  "content" => $post->getContent(),
+					  "author" => $post->getAuthor(),
+					  "time" => $post->getTime(),
+					  "date" => $post->getDate(),
+					  "image" => $post->getImage()
+				));
+			}
+			
+	  	header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+	  	header('Content-Type: application/json');
+	 	echo(json_encode($posts_array));
+	  }
+
 
 }
 
@@ -362,6 +383,7 @@ URIDispatcher::getInstance()
 ->map("GET",	"/post/$1", array($postRest,"readPost"))
 ->map("POST", "/post", array($postRest,"createPost"))
 ->map("GET", "/ingredients", array($postRest,"findAllIngredients"))
+->map("GET", "/myrecipes", array($postRest,"findMyRecipes"))
 ->map("GET", "/recingr/$1", array($postRest,"findRecipeIngredients"))
 ->map("PUT",	"/post/$1", array($postRest,"updatePost"))
 ->map("DELETE", "/post/$1", array($postRest,"deletePost"));

@@ -7,6 +7,10 @@ class PostsService {
     return $.get(AppConfig.backendServer+'/rest/post');
   }
 
+  findMyRecipes() {
+    return $.get(AppConfig.backendServer+'/rest/myrecipes');
+  }
+
   findAllIngredients() {
     return $.get(AppConfig.backendServer+'/rest/ingredients');
   }

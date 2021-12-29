@@ -8,7 +8,7 @@ class MainComponent extends Fronty.RouterComponent {
     this.postsModel = new PostsModel();
     this.userService = new UserService();
 
-    super.setRouterConfig({
+    super.setRouterConfig({   //templates del app.js
       posts: {
         component: new PostsComponent(this.postsModel, this.userModel, this),
         title: 'Posts'
@@ -24,6 +24,10 @@ class MainComponent extends Fronty.RouterComponent {
       'add-post': {
         component: new PostAddComponent(this.postsModel, this.userModel, this),
         title: 'Add Post'
+      },
+      'myrecipes': {
+        component: new MyRecipesComponent(this.postsModel, this.userModel, this),
+        title: 'My Recipes'
       },
       login: {
         component: new LoginComponent(this.userModel, this),

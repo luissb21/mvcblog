@@ -25,6 +25,8 @@ Promise.all([
     I18n.initializeCurrentLanguage('js/i18n'),
     loadTextFile('templates/components/main.hbs').then((source) =>
       Handlebars.templates.main = Handlebars.compile(source)),
+      loadTextFile('templates/components/myrecipes.hbs').then((source) =>
+      Handlebars.templates.myrecipes = Handlebars.compile(source)),
     loadTextFile('templates/components/language.hbs').then((source) =>
       Handlebars.templates.language = Handlebars.compile(source)),
     loadTextFile('templates/components/user.hbs').then((source) =>
@@ -49,3 +51,4 @@ Promise.all([
   }).catch((err) => {
     alert('FATAL: could not start app ' + err);
   });
+  MyRecipesComponent

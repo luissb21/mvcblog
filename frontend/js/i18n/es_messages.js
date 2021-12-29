@@ -34,7 +34,7 @@ I18n.translations = {
   'The username/password is not valid': 'El nombre de usuario/contraseña no son válidos',
   'Email': 'Email',
   'Home': 'Home',
-  'All Recipes': 'Todas las Recetas',
+  'All Recipes (Filters)': 'Todas las Recetas (Filtros)',
   'Language': 'Idioma',
   'My Recipes': 'Mis Recetas',
   'Home': 'Home',
@@ -63,6 +63,10 @@ I18n.translations = {
   'Make the necessary changes':'Haz lo cambios necesarios',
   'Actual image':'Fotografía actual',
   'New recipe´s image':'Nueva imagen de la receta',
+  'Your Recipes':'Tus recetas',
+  'Here´s what you have created!':'¡Aquí esta lo que has creado!',
+  '':'',
+  '':'',
   '':'',
 
 

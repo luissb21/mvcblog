@@ -1,8 +1,8 @@
-class PostsComponent extends Fronty.ModelComponent {
+class MyRecipesComponent extends Fronty.ModelComponent {
   constructor(postsModel, userModel, router) {
-    super(Handlebars.templates.poststable, postsModel, null, null);
-    
-    
+    super(Handlebars.templates.myrecipes, postsModel, null, null);
+
+
     this.postsModel = postsModel;
     this.userModel = userModel;
     this.addModel('user', userModel);
@@ -17,32 +17,31 @@ class PostsComponent extends Fronty.ModelComponent {
   }
 
   updatePosts() {
-    this.postsService.findAllPosts().then((data) => {
+    this.postsService.findMyRecipes().then((data) => {
 
       this.postsModel.setPosts(
         // create a Fronty.Model for each item retrieved from the backend
         data.map(
           (item) => new PostModel(item.id, item.title, item.content, item.author, item.time, item.date, item.image)
-      ));
+        ));
     });
   }
-
 
   // Override
   createChildModelComponent(className, element, id, modelItem) {
     return new PostRowComponent(modelItem, this.userModel, this.router, this);
   }
 }
-
+/*
 class PostRowComponent extends Fronty.ModelComponent {
   constructor(postModel, userModel, router, postsComponent) {
     super(Handlebars.templates.postrow, postModel, null, null);
-    
+
     this.postsComponent = postsComponent;
-    
+
     this.userModel = userModel;
     this.addModel('user', userModel); // a secondary model
-    
+
     this.router = router;
 
     this.addEventListener('click', '.remove-button', (event) => {
@@ -63,5 +62,5 @@ class PostRowComponent extends Fronty.ModelComponent {
       this.router.goToPage('edit-post?id=' + postId);
     });
   }
-
 }
+*/
