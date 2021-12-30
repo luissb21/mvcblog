@@ -2,7 +2,9 @@ class PostsComponent extends Fronty.ModelComponent {
   constructor(postsModel, userModel, router) {
     super(Handlebars.templates.poststable, postsModel, null, null);
     
-    
+    this.postsModelLikes = new PostsModel();
+    this.addModel('postsLiked', postsModel);
+
     this.postsModel = postsModel;
     this.userModel = userModel;
     this.addModel('user', userModel);
@@ -14,6 +16,7 @@ class PostsComponent extends Fronty.ModelComponent {
 
   onStart() {
     this.updatePosts();
+    this.updatePostsLiked();
   }
 
   updatePosts() {
@@ -27,6 +30,16 @@ class PostsComponent extends Fronty.ModelComponent {
     });
   }
 
+  updatePostsLiked() {
+  this.postsService.findPostsLiked().then((data) => {
+
+    this.postsModelLikes.setPosts(
+      // create a Fronty.Model for each item retrieved from the backend
+      data.map(
+        (item) => new PostModel(item.id, item.title, item.content, item.author, item.time, item.date, item.image)
+    ));
+  });
+}
 
   // Override
   createChildModelComponent(className, element, id, modelItem) {

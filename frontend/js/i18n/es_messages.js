@@ -70,11 +70,14 @@ I18n.translations = {
   'Filter':'Filtrar',
   'Ingredients list':'Lista de ingredientes',
   'Search':'Buscar',
+  'Private Home':'Home Privada',
+  'Here are the recipes you liked':'Aquí estan las recetas que te han gustado',
+  'Public Home':'Home Publica',
+  'You have no likes :(, so here´s the latest recipes from the community':'No tienes likes :(, asi que aqui tienes las últimas recetas de la comunidad',
   '':'',
   '':'',
   '':'',
   '':'',
-
 
 
 

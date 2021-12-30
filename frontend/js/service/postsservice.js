@@ -3,8 +3,12 @@ class PostsService {
 
   }
 
-  findAllPosts() {//HOME POST
+  findAllPosts() {//Public HOME (12 last post)
     return $.get(AppConfig.backendServer+'/rest/post');
+  }
+
+  findPostsLiked() {//Public HOME (12 last post)
+    return $.get(AppConfig.backendServer+'/rest/likes');
   }
 
   findMyRecipes() {

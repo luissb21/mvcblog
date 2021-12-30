@@ -34,16 +34,50 @@
 
 <!-- Texto bienvenida -->
   <div class="container py-5 myrecipe_text">
-			<div class="row py-5 m-auto ">
-				<div class="col-lg-auto">
-				<h1 class="h1_myrecipes">{{i18n 'Latest recipes from the community'}}</h1>
-				<h6 class="h6_myrecipes">{{i18n 'Do not run out of hunger!'}}</h6>
-				</div>
-	    </div>
+			
 
 <!-- Lista Recetas -->
+{{#if user.isLogged}}	<!-- if logged-->
+
+<!-- Texto bienvenida -->
+<div class="row py-5 m-auto ">
+	<div class="col-lg-auto">
+		<h1 class="h1_myrecipes">{{i18n 'Private Home'}}</h1>
+		<h6 class="h6_myrecipes">{{i18n 'Here are the recipes you liked'}}</h6>
+	</div>
+</div>
+<!-- Texto bienvenida -->
+
 <div class="row row_posts">
-  {{#if posts.length}}
+  {{#if postsLiked.length}}
+      {{#each postsLiked}}
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
+        <div class="card border-0 bg-light mb-2">
+							<div class="card-body">
+								{{#if this.image}}  <!--Si tiene imagen, muéstrala -->
+									<img src="../res/{{this.image}}" class="img-fluid img_receta" alt="img_not_found"></img>
+								{{else}}  <!--Si NO tiene imagen, muestra la imagen por DEFECTO -->
+                 					<img src="../img/image_not_found.jpeg" class="img-fluid img_receta" alt="img_not_found"></img>
+								{{/if}}
+							</div>
+				 </div>
+            <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
+      </div>
+      {{/each}}
+  {{/if}}	
+</div>
+{{else}} <!-- else logged (not logged)-->
+
+<!-- Texto bienvenida -->
+<div class="row py-5 m-auto ">
+	<div class="col-lg-auto">
+		<h1 class="h1_myrecipes">{{i18n 'Public Home'}}</h1>
+		<h6 class="h6_myrecipes">{{i18n 'Latest recipes from the community'}}</h6>
+	</div>
+</div>
+<!-- Texto bienvenida -->
+
+<div class="row row_posts">
       {{#each posts}}
       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
         <div class="card border-0 bg-light mb-2">
@@ -58,12 +92,13 @@
             <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
       </div>
       {{/each}}
-  {{/if}}
 </div>
+{{/if}}
 
 {{#if user.isLogged}}
   <a href='#add-post'>{{i18n 'Add post'}}</a>
 {{/if}}
 </div>
+
 
 </div>

@@ -6,6 +6,7 @@ class MainComponent extends Fronty.RouterComponent {
     // we can instantiate models at any place
     this.userModel = new UserModel();
     this.postsModel = new PostsModel();
+    
     this.userService = new UserService();
 
     super.setRouterConfig({   //templates del app.js
