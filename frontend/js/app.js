@@ -27,6 +27,8 @@ Promise.all([
       Handlebars.templates.main = Handlebars.compile(source)),
       loadTextFile('templates/components/myrecipes.hbs').then((source) =>
       Handlebars.templates.myrecipes = Handlebars.compile(source)),
+      loadTextFile('templates/components/allrecipes.hbs').then((source) =>
+      Handlebars.templates.allrecipes = Handlebars.compile(source)),
     loadTextFile('templates/components/language.hbs').then((source) =>
       Handlebars.templates.language = Handlebars.compile(source)),
     loadTextFile('templates/components/user.hbs').then((source) =>

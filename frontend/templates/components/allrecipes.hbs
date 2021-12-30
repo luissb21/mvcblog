@@ -1,0 +1,101 @@
+<div>
+	<!--- Image Slider -->
+	<div id="carouselHome" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-indicators">
+			<button type="button" data-bs-target="#carouselHome" data-bs-slide-to="0" class="active"></button>
+			<button type="button" data-bs-target="#carouselHome" data-bs-slide-to="1"></button>
+			<button type="button" data-bs-target="#carouselHome" data-bs-slide-to="2"></button>
+		</div>
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="../img/carrousel0.jpg" class="d-block w-100"></img>
+				<div class="carousel-caption d-none d-md-block">
+					<h1>{{i18n 'Welcome to Cookinillas!'}}</h1>
+					<h4>{{i18n 'Ourense´s best cooking web page'}}</h4>
+				</div>
+			</div>
+			<div class="carousel-item">
+				<img src="../img/carrousel1.jpg" class="d-block w-100"></img>
+				<div class="carousel-caption d-none d-md-block">
+					<h1>{{i18n 'Upload your own recipes'}}</h1>
+					<h4>{{i18n 'Share your recipes with the world'}}</h4>
+				</div>
+			</div>
+			<div class="carousel-item">
+				<img src="../img/carrousel2.jpg" class="d-block w-100"></img>
+				<div class="carousel-caption d-none d-md-block">
+					<h1>{{i18n 'Register now!'}}</h1>
+					<h4>{{i18n 'Log in to taste the full experience'}}</h4>
+					<a href=""><button type="button" class="btn btn-primary btn-lg">{{i18n 'Login'}}</button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Texto bienvenida -->
+	<div class="container py-5 myrecipe_text">
+		<div class="row py-5 m-auto ">
+			<div class="col-lg-auto">
+				<h1 class="h1_myrecipes">{{i18n 'All Recipes'}}</h1>
+				<h6 class="h6_myrecipes">{{i18n 'Apply the filters you want'}}</h6>
+			</div>
+		</div>
+
+<!-- Filter  -->
+<div class="col-md-3 mb-3">
+    <div class="card shadow">
+        <div class="card-header">
+            <h5>
+                {{i18n 'Filter'}}
+                <input type="submit" id="filterbutton" value="{{i18n 'Search'}}" class="btn btn-primary" />
+                <!-- input del form -->
+            </h5>
+        </div>
+        <div class="card-body">
+            <h6>
+                {{i18n 'Ingredients list'}}
+            </h6>
+            <hr></hr>
+            <!--INICIO DE FILTRADO DE INGREDIENTES -->
+			{{#each ingredients.ingredients}}
+            <div>
+                <input type="checkbox" name="ingredientFilter" value="{{this.name}}">
+				<label for="music">{{this.name}}</label>
+				</input>
+            </div>
+			{{/each}}
+            <!--FIN DE FILTRADO DE INGREDIENTES -->
+        </div>
+    </div>
+</div>
+
+		<!-- Lista Recetas -->
+		<div class="row row_posts">
+			{{#if posts.length}}
+			{{#each posts}}
+			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
+				<div class="card border-0 bg-light mb-2">
+					<div class="card-body">
+						{{#if this.image}}
+						<!--Si tiene imagen, muéstrala -->
+						<img src="../res/{{this.image}}" class="img-fluid img_receta" alt="img_not_found"></img>
+						{{else}}
+						<!--Si NO tiene imagen, muestra la imagen por DEFECTO -->
+						<img src="../img/image_not_found.jpeg" class="img-fluid img_receta" alt="img_not_found"></img>
+						{{/if}}
+					</div>
+				</div>
+				<p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
+			</div>
+			{{/each}}
+			{{else}}
+			<img src="https://c.tenor.com/8m9Kyj325WQAAAAC/nothing-to-do-here-bye.gif" alt="nadaPorAqui" width="250" />
+			{{/if}}
+		</div>
+
+		{{#if user.isLogged}}
+		<a href='#add-post'>{{i18n 'Add post'}}</a>
+		{{/if}}
+	</div>
+
+</div>

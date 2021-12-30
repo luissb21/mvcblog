@@ -47,7 +47,7 @@ class PostMapper
 
 		foreach ($posts_db as $post) {
 			$author = new User($post["author"]);
-			array_push($posts, new Post($post["id"], $post["title"], $post["content"], $author, $post["time"], $post["date"], $post["image"]));
+			array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"]));
 		}
 
 		return $posts;

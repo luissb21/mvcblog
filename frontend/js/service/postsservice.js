@@ -3,12 +3,20 @@ class PostsService {
 
   }
 
-  findAllPosts() {
+  findAllPosts() {//HOME POST
     return $.get(AppConfig.backendServer+'/rest/post');
   }
 
   findMyRecipes() {
     return $.get(AppConfig.backendServer+'/rest/myrecipes');
+  }
+
+  findAllRecipes() {
+    return $.get(AppConfig.backendServer+'/rest/allrecipes');
+  }
+
+  filters(filters) {
+    return $.get(AppConfig.backendServer+'/rest/filters/' + filters);
   }
 
   findAllIngredients() {

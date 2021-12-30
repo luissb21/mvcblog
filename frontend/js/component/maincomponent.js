@@ -29,6 +29,10 @@ class MainComponent extends Fronty.RouterComponent {
         component: new MyRecipesComponent(this.postsModel, this.userModel, this),
         title: 'My Recipes'
       },
+      'allrecipes': {
+        component: new AllRecipesComponent(this.postsModel, this.userModel, this),
+        title: 'All Recipes'
+      },
       login: {
         component: new LoginComponent(this.userModel, this),
         title: 'Login'

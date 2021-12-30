@@ -240,7 +240,7 @@ class PostRest extends BaseRest {
 		$post->setDate($data->date);
 		$post->setImage($postId . $data->image . 'edit');
 
-		file_put_contents('../res/' . $postId . $data->image  . 'edit', base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data->imgb64)));
+		file_put_contents('../res/' . $postId . 'edit' . $data->image, base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data->imgb64)));
 
 		try {
 			// validate Post object
@@ -373,6 +373,111 @@ class PostRest extends BaseRest {
 	 	echo(json_encode($posts_array));
 	  }
 
+	  public function findAllRecipes() {
+			$posts = $this->postMapper->findAll();
+			$posts_array = array();
+				foreach($posts as $post) {
+					array_push($posts_array, array(
+					  "id" => $post->getId(),
+					  "title" => $post->getTitle(),
+					  "content" => $post->getContent(),
+					  "author" => $post->getAuthor(),
+					  "time" => $post->getTime(),
+					  "date" => $post->getDate(),
+					  "image" => $post->getImage()
+				));
+			}
+			
+	  	header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+	  	header('Content-Type: application/json');
+	 	echo(json_encode($posts_array));
+	  }
+
+	  
+
+	  public function filters($filters) {
+		$filt = explode(',', $filters);
+		$posts_array = array();
+		//var_dump($filt);
+
+		if (!(empty($filt))) {
+			$array_pi = array();
+
+			foreach ($filt as $ingr_name) {
+				$posts_ingr = $this->post_ingrMapper->findPostIngrByName($ingr_name); //Todas las relaciones post_ingr con ese ingrediente
+				foreach ($posts_ingr as $rel) {
+					array_push($array_pi, $rel);
+				}
+			}
+
+			//var_dump($array_pi);	//$array_pi es un array de objetos Post_Ingr con las coincidencias solicitadas
+
+			$array_ids = array();	//Array con todas las IDs obtenidas
+
+			foreach ($array_pi as $pi) {
+				$temp_id = $pi->getPost_id();
+				if (!(in_array($temp_id, $array_ids))) {
+					array_push($array_ids, $temp_id);
+				}
+			}
+
+			//var_dump($array_ids);
+
+			$id_clasifier = array();
+
+			foreach ($array_ids as $id) {
+				$id_clasifier[$id] = array();
+				$ingrs_id = array();
+				foreach ($array_pi as $relation) {
+					if ($relation->getPost_Id() == $id) {
+						array_push($ingrs_id, $relation->getIngr_name());
+					}
+				}
+				$id_clasifier[$id] = $ingrs_id;
+			}
+
+			//var_dump($id_clasifier);
+
+			$show = array(); //Ids de los posts a mostrar
+
+			foreach ($array_ids as $id) {
+				if ($id_clasifier[$id] == $filt) {
+					array_push($show, $id);
+				}
+			}
+			//echo("-----------show------------\n");
+			//var_dump($show);
+
+			$postFilter = array();
+			foreach ($show as $s) {
+				$post = $this->postMapper->findById($s);
+				array_push($postFilter, $post);
+			}
+
+			//echo("-----------postFilter------------\n");
+			//var_dump($postFilter);
+
+			foreach($postFilter as $post) {
+				array_push($posts_array, array(
+				  "id" => $post->getId(),
+				  "title" => $post->getTitle(),
+				  "content" => $post->getContent(),
+				  "author" => $post->getAuthor(),
+				  "time" => $post->getTime(),
+				  "date" => $post->getDate(),
+				  "image" => $post->getImage()
+			));
+		}
+
+	}
+
+	//var_dump($posts_array);
+		
+	  header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+	  header('Content-Type: application/json');
+	 echo(json_encode($posts_array));
+  }
+
 
 }
 
@@ -380,6 +485,8 @@ class PostRest extends BaseRest {
 $postRest = new PostRest();
 URIDispatcher::getInstance()
 ->map("GET",	"/post", array($postRest,"getPosts"))
+->map("GET",	"/allrecipes", array($postRest,"findAllRecipes"))
+->map("GET",	"/filters/$1", array($postRest,"filters"))
 ->map("GET",	"/post/$1", array($postRest,"readPost"))
 ->map("POST", "/post", array($postRest,"createPost"))
 ->map("GET", "/ingredients", array($postRest,"findAllIngredients"))
