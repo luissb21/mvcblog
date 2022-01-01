@@ -1,4 +1,5 @@
 <div key="{{id}}">
+  {{log user.currentUser}}
   <h6><a class="postTitle" href="#view-post?id={{id}}">{{title}}</a></h6>
   <p class="postAutor" >Autor: {{author}}</p>
   <td>
@@ -8,6 +9,20 @@
       <button class="remove-button" item="{{id}}">{{i18n 'remove'}}</button>
       <button class="edit-button" item="{{id}}">{{i18n 'edit'}}</button>
     {{/if_eq}}
+  </td>
+  <td>
+    <!--Me gusta-->
+<div class="likeDiv">
+
+{{#unless user.currentUser}}
+  <i class="far fa-heart"></i>
+{{else}}
+  {{!-- {{#if}} --}}
+  <i class="fas fa-heart"></i>
+  {{!-- {{/if}} --}}
+{{/unless}}
+</div>
+<!-- Me gusta-->
   </td>
 </div>
 

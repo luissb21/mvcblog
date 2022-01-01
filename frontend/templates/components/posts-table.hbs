@@ -39,7 +39,6 @@
 
 <!-- Lista Recetas -->
 {{#if user.isLogged}}	<!-- if logged-->
-{{log postsLiked.posts}}
 <!-- Texto bienvenida -->
 <div class="row py-5 m-auto ">
 	<div class="col-lg-auto">
@@ -66,6 +65,29 @@
             <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
       </div>
       {{/each}}
+	  {{else}} 
+
+<!-- Texto bienvenida -->
+<h6 class="h6_myrecipes">{{i18n 'You have no likes :(, so here´s the latest recipes from the community'}}</h6>
+<!-- Texto bienvenida -->
+
+<div class="row row_posts">
+      {{#each posts}}
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
+        <div class="card border-0 bg-light mb-2">
+							<div class="card-body">
+								{{#if this.image}}  <!--Si tiene imagen, muéstrala -->
+									<img src="../res/{{this.image}}" class="img-fluid img_receta" alt="img_not_found"></img>
+								{{else}}  <!--Si NO tiene imagen, muestra la imagen por DEFECTO -->
+                 					<img src="../img/image_not_found.jpeg" class="img-fluid img_receta" alt="img_not_found"></img>
+								{{/if}}
+							</div>
+				 </div>
+            <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
+      </div>
+      {{/each}}
+</div>
+
   {{/if}}	
 </div>
 {{else}} <!-- else logged (not logged)-->
