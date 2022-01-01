@@ -3,7 +3,7 @@ class PostsComponent extends Fronty.ModelComponent {
     super(Handlebars.templates.poststable, postsModel, null, null);
     
     this.postsModelLikes = new PostsModel();
-    this.addModel('postsLiked', postsModel);
+    this.addModel('postsLiked', this.postsModelLikes);
 
     this.postsModel = postsModel;
     this.userModel = userModel;

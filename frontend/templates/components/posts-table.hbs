@@ -36,9 +36,10 @@
   <div class="container py-5 myrecipe_text">
 			
 
+
 <!-- Lista Recetas -->
 {{#if user.isLogged}}	<!-- if logged-->
-
+{{log postsLiked.posts}}
 <!-- Texto bienvenida -->
 <div class="row py-5 m-auto ">
 	<div class="col-lg-auto">
@@ -48,9 +49,10 @@
 </div>
 <!-- Texto bienvenida -->
 
+
 <div class="row row_posts">
-  {{#if postsLiked.length}}
-      {{#each postsLiked}}
+  {{#if postsLiked.posts.length}}
+      {{#each postsLiked.posts}}
       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
         <div class="card border-0 bg-light mb-2">
 							<div class="card-body">
