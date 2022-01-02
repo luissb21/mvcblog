@@ -245,7 +245,7 @@ class PostMapper
 	 * @return Post The Post instances (without ingredients). NULL
 	 * if the Post is not found
 	 */
-	public function findByIdWithIngredients($postid)
+	public function findByIdWithIngredients($postid,$currentuser)
 	{
 		$stmt = $this->db->prepare("SELECT
 			posts.id,
@@ -267,7 +267,11 @@ class PostMapper
 		$post_wt_ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		//print_r($post_wt_ingredients);
 
+		$like = $this->likedByUser($currentuser, $post_wt_ingredients[0]["id"]);
+
+
 		if (sizeof($post_wt_ingredients) > 0) {
+		
 			$post = new Post(
 				$post_wt_ingredients[0]["id"],
 				$post_wt_ingredients[0]["title"],
@@ -275,7 +279,9 @@ class PostMapper
 				$post_wt_ingredients[0]["author"],
 				$post_wt_ingredients[0]["time"],
 				$post_wt_ingredients[0]["date"],
-				$post_wt_ingredients[0]["image"]
+				$post_wt_ingredients[0]["image"],
+				null,
+				$like
 			);
 			$ingredient_array = array();
 			if ($post_wt_ingredients[0]["ingr_name"] != null) {

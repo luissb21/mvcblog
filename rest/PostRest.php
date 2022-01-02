@@ -140,8 +140,12 @@ class PostRest extends BaseRest
 	//function readPost: Visualizacion en detalle de un Post
 	public function readPost($postId)
 	{
+		$currentuser = null;
+		if (isset($_SERVER['PHP_AUTH_USER'])) {
+			$currentuser = $_SERVER['PHP_AUTH_USER'];
+		}
 		// find the Post object in the database
-		$post = $this->postMapper->findByIdWithIngredients($postId); //setea los Post_Ingr en el metodo
+		$post = $this->postMapper->findByIdWithIngredients($postId,$currentuser); //setea los Post_Ingr en el metodo
 		if ($post == NULL) {
 			header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
 			echo ("Post with id " . $postId . " not found");
@@ -165,7 +169,8 @@ class PostRest extends BaseRest
 			"time" => $post->getTime(),
 			"date" => $post->getDate(),
 			"image" => $post->getImage(),
-			"ingredients" => $post_ingr_array
+			"ingredients" => $post_ingr_array,
+			"like" => $post->getLike()
 
 		);
 

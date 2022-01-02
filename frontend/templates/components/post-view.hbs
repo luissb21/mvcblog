@@ -19,6 +19,19 @@
       </div>
     </div>
 
+    <!--Me gusta -->
+					<div class="likeDiv">
+						{{#if user.isLogged}}
+							{{#if_eq selectedPost.like 1}}
+							<i class="fas fa-heart"></i> 
+							{{else}}
+							<i class="far fa-heart"></i>
+							{{/if_eq}}
+						{{else}}
+						<i class="far fa-heart"></i>
+						{{/if}}
+					</div>
+
 <!-- Ingredientes -->
 <div class="form-group row form_row">
 <label for="form_content" class="form_label">{{i18n 'Ingredients'}}</label>
