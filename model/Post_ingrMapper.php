@@ -81,6 +81,18 @@ class Post_ingrMapper {
 		return $ingredients_db; */
 	}
 
+	public function likedByUser($currentuser, $postId)
+	{ 
+		$like = 0;
+		$stmt = $this->db->query("SELECT * FROM post_like WHERE post_like.user_name = '$currentuser' AND post_like.post_id = '$postId'"); //OJO CON EL 12
+		$posts_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		if(!empty($posts_db)){
+			$like = 1;
+		}
+		return $like;
+	}
+
 
 		public function save(Post_ingr $post_ingr) {	//Guarda una variable post_ingr
 			$stmt = $this->db->prepare("INSERT INTO post_ingr(post_id,ingr_name, cantidad) values (?,?,?)");

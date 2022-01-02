@@ -332,7 +332,8 @@ class PostRest extends BaseRest
 				"author" => $post->getAuthor(),
 				"time" => $post->getTime(),
 				"date" => $post->getDate(),
-				"image" => $post->getImage()
+				"image" => $post->getImage(),
+				"like" => $post->getLike()
 			));
 		}
 
@@ -343,7 +344,12 @@ class PostRest extends BaseRest
 
 	public function findAllRecipes()
 	{
-		$posts = $this->postMapper->findAll();
+		$currentuser = null;
+		if (isset($_SERVER['PHP_AUTH_USER'])) {
+			$currentuser = $_SERVER['PHP_AUTH_USER'];
+		}
+
+		$posts = $this->postMapper->findAll($currentuser);
 		$posts_array = array();
 		foreach ($posts as $post) {
 			array_push($posts_array, array(
@@ -353,9 +359,12 @@ class PostRest extends BaseRest
 				"author" => $post->getAuthor(),
 				"time" => $post->getTime(),
 				"date" => $post->getDate(),
-				"image" => $post->getImage()
+				"image" => $post->getImage(),
+				"like" => $post->getLike()
 			));
 		}
+
+		//var_dump($posts_array);
 
 		header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
 		header('Content-Type: application/json');
@@ -366,6 +375,7 @@ class PostRest extends BaseRest
 
 	public function filters($filters)
 	{
+		
 		$filt = explode(',', $filters);
 		$posts_array = array();
 		//var_dump($filt);
@@ -464,7 +474,8 @@ class PostRest extends BaseRest
 					"author" => $post->getAuthor(),
 					"time" => $post->getTime(),
 					"date" => $post->getDate(),
-					"image" => $post->getImage()
+					"image" => $post->getImage(),
+					"like" => $post->getLike()
 				));
 			}
 
@@ -475,6 +486,27 @@ class PostRest extends BaseRest
 			echo (json_encode($posts_array));
 		}
 	}
+/*
+	public function countLikes(){
+		$posts = $this->postMapper->findAll();
+		$countLikes = array();
+			foreach ($posts as $post) {
+				$c = $this->post_likeMapper->countLikesPost($post);
+				$countLikes[$post->getId()] = $c;
+			}
+
+		//var_dump($countLikes);
+		header($_SERVER['SERVER_PROTOCOL'] . ' 200 Ok');
+		header('Content-Type: application/json');
+		echo (json_encode($countLikes));
+	}
+*/
+
+
+
+
+
+
 }
 
 // URI-MAPPING for this Rest endpoint
@@ -483,6 +515,7 @@ URIDispatcher::getInstance()
 	->map("GET",	"/post", array($postRest, "getPosts"))
 	->map("GET",	"/likes", array($postRest, "findPostsLiked"))
 	->map("GET",	"/allrecipes", array($postRest, "findAllRecipes"))
+	//->map("GET",	"/count", array($postRest, "countLikes"))
 	->map("GET",	"/filters/$1", array($postRest, "filters"))
 	->map("GET",	"/post/$1", array($postRest, "readPost"))
 	->map("POST", "/post", array($postRest, "createPost"))

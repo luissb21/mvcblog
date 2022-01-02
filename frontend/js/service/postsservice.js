@@ -19,6 +19,10 @@ class PostsService {
     return $.get(AppConfig.backendServer+'/rest/allrecipes');
   }
 
+  countLikes() {
+    return $.get(AppConfig.backendServer+'/rest/count');
+  }
+
   filters(filters) {
     return $.get(AppConfig.backendServer+'/rest/filters/' + filters);
   }

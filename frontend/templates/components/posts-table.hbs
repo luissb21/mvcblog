@@ -32,75 +32,19 @@
 		</div>
 	</div>
 
-<!-- Texto bienvenida -->
+<!-- Container -->
   <div class="container py-5 myrecipe_text">
 			
-
-
 <!-- Lista Recetas -->
-{{#if user.isLogged}}	<!-- if logged-->
-<!-- Texto bienvenida -->
-<div class="row py-5 m-auto ">
-	<div class="col-lg-auto">
-		<h1 class="h1_myrecipes">{{i18n 'Private Home'}}</h1>
-		<h6 class="h6_myrecipes">{{i18n 'Here are the recipes you liked'}}</h6>
-	</div>
-</div>
-<!-- Texto bienvenida -->
-
-
-<div class="row row_posts">
-  {{#if postsLiked.posts.length}}
-      {{#each postsLiked.posts}}
-      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
-        <div class="card border-0 bg-light mb-2">
-							<div class="card-body">
-								{{#if this.image}}  <!--Si tiene imagen, muéstrala -->
-									<img src="../res/{{this.image}}" class="img-fluid img_receta" alt="img_not_found"></img>
-								{{else}}  <!--Si NO tiene imagen, muestra la imagen por DEFECTO -->
-                 					<img src="../img/image_not_found.jpeg" class="img-fluid img_receta" alt="img_not_found"></img>
-								{{/if}}
-							</div>
-				 </div>
-            <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
-      </div>
-      {{/each}}
-	  {{else}} 
-
-<!-- Texto bienvenida -->
-<h6 class="h6_myrecipes">{{i18n 'You have no likes :(, so here´s the latest recipes from the community'}}</h6>
-<!-- Texto bienvenida -->
-
-<div class="row row_posts">
-      {{#each posts}}
-      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
-        <div class="card border-0 bg-light mb-2">
-							<div class="card-body">
-								{{#if this.image}}  <!--Si tiene imagen, muéstrala -->
-									<img src="../res/{{this.image}}" class="img-fluid img_receta" alt="img_not_found"></img>
-								{{else}}  <!--Si NO tiene imagen, muestra la imagen por DEFECTO -->
-                 					<img src="../img/image_not_found.jpeg" class="img-fluid img_receta" alt="img_not_found"></img>
-								{{/if}}
-							</div>
-				 </div>
-            <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
-      </div>
-      {{/each}}
-</div>
-
-  {{/if}}	
-</div>
-{{else}} <!-- else logged (not logged)-->
-
-<!-- Texto bienvenida -->
+{{#unless user.isLogged}}	<!-- NO LOGEADO-->
+<!-- Texto bienvenida NO LOGEADO -->
 <div class="row py-5 m-auto ">
 	<div class="col-lg-auto">
 		<h1 class="h1_myrecipes">{{i18n 'Public Home'}}</h1>
 		<h6 class="h6_myrecipes">{{i18n 'Latest recipes from the community'}}</h6>
 	</div>
 </div>
-<!-- Texto bienvenida -->
-
+<!-- Ultimas 12 recetas-->
 <div class="row row_posts">
       {{#each posts}}
       <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
@@ -114,15 +58,112 @@
 							</div>
 				 </div>
             <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
+            <!--Me gusta -->
+				<div class="likeDiv">
+					{{#unless user.isLogged}}
+					{{#if_eq this.like 1}}
+					<i class="fas fa-heart"></i> <!-- solid -->
+					{{else}}
+					<i class="far fa-heart"></i>
+					{{/if_eq}}
+					{{else}}
+					<i class="far fa-heart"></i>
+					{{/unless}}
+				</div>
+				<!--Me gusta-->
       </div>
       {{/each}}
 </div>
-{{/if}}
+{{else}} <!-- Si logeado LOGEADO-->
+    {{#unless postsLiked.posts.length}} <!-- NO tiene likes-->
+    <!-- Texto bienvenida LOGEADO -->
+    <div class="row py-5 m-auto ">
+	    <div class="col-lg-auto">
+	    	<h1 class="h1_myrecipes">{{i18n 'Private Home'}}</h1>
+	    	<h6 class="h6_myrecipes">{{i18n 'You have no likes :(, so here´s the latest recipes from the community'}}</h6>
+	    </div>
+    </div>
+    <!-- Ultimas 12 recetas-->
+    <div class="row row_posts">
+        {{#each posts}}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
+            <div class="card border-0 bg-light mb-2">
+                <div class="card-body">
+                    {{#if this.image}}
+                    <!--Si tiene imagen, muéstrala -->
+                    <img src="../res/{{this.image}}" class="img-fluid img_receta" alt="img_not_found"></img>
+                    {{else}}
+                    <!--Si NO tiene imagen, muestra la imagen por DEFECTO -->
+                    <img src="../img/image_not_found.jpeg" class="img-fluid img_receta" alt="img_not_found"></img>
+                    {{/if}}
+                </div>
+            </div>
+            <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
+            <!--Me gusta -->
+				<div class="likeDiv">
+					{{#unless user.isLogged}}
+					{{#if_eq this.like 1}}
+					<i class="fas fa-heart"></i> <!-- solid -->
+					{{else}}
+					<i class="far fa-heart"></i>
+					{{/if_eq}}
+					{{else}}
+					<i class="far fa-heart"></i>
+					{{/unless}}
+				</div>
+				<!--Me gusta-->
+        </div>
+        {{/each}}
+    </div>
+        {{else}} <!-- SI tiene likes-->
+            <!-- Texto bienvenida LOGEADO -->
+            <div class="row py-5 m-auto ">
+                <div class="col-lg-auto">
+                    <h1 class="h1_myrecipes">{{i18n 'Private Home'}}</h1>
+                    <h6 class="h6_myrecipes">{{i18n 'Here are the recipes you liked'}}</h6>
+                </div>
+            </div>
+            <!-- LIKES-->
+            <div class="row row_posts">
+                {{#each postsLiked.posts}}
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 text-center col_post">
+                    <div class="card border-0 bg-light mb-2">
+                        <div class="card-body">
+                            {{#if this.image}}
+                            <!--Si tiene imagen, muéstrala -->
+                            <img src="../res/{{this.image}}" class="img-fluid img_receta" alt="img_not_found"></img>
+                            {{else}}
+                            <!--Si NO tiene imagen, muestra la imagen por DEFECTO -->
+                            <img src="../img/image_not_found.jpeg" class="img-fluid img_receta" alt="img_not_found"></img>
+                            {{/if}}
+                        </div>
+                    </div>
+                    <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
+                    <!--Me gusta -->
+				<div class="likeDiv">
+					{{#unless user.isLogged}}
+					{{#if_eq this.like 1}}
+					<i class="fas fa-heart"></i> <!-- solid -->
+					{{else}}
+					<i class="far fa-heart"></i>
+					{{/if_eq}}
+					{{else}}
+					<i class="far fa-heart"></i>
+					{{/unless}}
+				</div>
+				<!--Me gusta-->
+                </div>
+                {{/each}}
+            </div>
+    {{/unless}}
+{{/unless}}
 
 {{#if user.isLogged}}
   <a href='#add-post'>{{i18n 'Add post'}}</a>
 {{/if}}
 </div>
+
+
 
 
 </div>

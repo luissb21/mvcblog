@@ -38,7 +38,7 @@ class PostMapper
 	 * @throws PDOException if a database error occurs
 	 * @return mixed Array of Post instances (without ingredients)
 	 */
-	public function findAll()
+	public function findAll($currentuser)
 	{ 
 		$stmt = $this->db->query("SELECT * FROM posts, users WHERE users.username = posts.author ORDER BY posts.date"); //OJO CON EL 12
 		$posts_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -46,11 +46,28 @@ class PostMapper
 		$posts = array();
 
 		foreach ($posts_db as $post) {
-			$author = new User($post["author"]);
-			array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"]));
+			if($this->likedByUser($currentuser, $post["id"]) == 1){
+				array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"], null , 1));
+			} else {
+				array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"], null, 0));
+			}
+			
 		}
 
 		return $posts;
+	}
+
+
+	public function likedByUser($currentuser, $postId)
+	{ 
+		$like = 0;
+		$stmt = $this->db->query("SELECT * FROM post_like WHERE post_like.user_name = '$currentuser' AND post_like.post_id = '$postId'"); //OJO CON EL 12
+		$posts_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		if(!empty($posts_db)){
+			$like = 1;
+		}
+		return $like;
 	}
 
 	public function findAllIngredients() {
@@ -90,7 +107,11 @@ class PostMapper
 		$posts = array();
 
 		foreach ($posts_db as $post) {
-			array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"]));
+			if($this->likedByUser($currentuser, $post["id"]) == 1){
+				array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"], null , 1));
+			} else {
+				array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"], null, 0));
+			}
 		}
 
 		return $posts;
@@ -143,8 +164,11 @@ class PostMapper
 		$posts = array();
 
 		foreach ($posts_db as $post) {
-			$author = new User($post["username"]);
-			array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"]));
+			if($this->likedByUser($currentuser, $post["id"]) == 1){
+				array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"], null , 1));
+			} else {
+				array_push($posts, new Post($post["id"], $post["title"], $post["content"], $post["author"], $post["time"], $post["date"], $post["image"], null , 0));
+			}
 		}
 		
 		return $posts;

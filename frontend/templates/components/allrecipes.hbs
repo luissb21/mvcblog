@@ -41,35 +41,36 @@
 			</div>
 		</div>
 
-<!-- Filter  -->
-<div class="col-md-3 mb-3">
-    <div class="card shadow">
-        <div class="card-header">
-            <h5>
-                {{i18n 'Filter'}}
-                <input type="submit" id="filterbutton" value="{{i18n 'Search'}}" class="btn btn-primary" />
-                <!-- input del form -->
-            </h5>
-        </div>
-        <div class="card-body">
-            <h6>
-                {{i18n 'Ingredients list'}}
-            </h6>
-            <hr></hr>
-            <!--INICIO DE FILTRADO DE INGREDIENTES -->
-			{{#each ingredients.ingredients}}
-            <div>
-                <input type="checkbox" name="ingredientFilter" value="{{this.name}}">
-				<label for="music">{{this.name}}</label>
-				</input>
-            </div>
-			{{/each}}
-            <!--FIN DE FILTRADO DE INGREDIENTES -->
-        </div>
-    </div>
-</div>
-
+		<!-- Filter  -->
+		<div class="col-md-3 mb-3">
+			<div class="card shadow">
+				<div class="card-header">
+					<h5>
+						{{i18n 'Filter'}}
+						<input type="submit" id="filterbutton" value="{{i18n 'Search'}}" class="btn btn-primary" />
+						<!-- input del form -->
+					</h5>
+				</div>
+				<div class="card-body">
+					<h6>
+						{{i18n 'Ingredients list'}}
+					</h6>
+					<hr>
+					</hr>
+					<!--INICIO DE FILTRADO DE INGREDIENTES -->
+					{{#each ingredients.ingredients}}
+					<div>
+						<input type="checkbox" name="ingredientFilter" value="{{this.name}}">
+						<label for="music">{{this.name}}</label>
+						</input>
+					</div>
+					{{/each}}
+					<!--FIN DE FILTRADO DE INGREDIENTES -->
+				</div>
+			</div>
+		</div>
 		<!-- Lista Recetas -->
+		
 		<div class="row row_posts">
 			{{#if posts.length}}
 			{{#each posts}}
@@ -86,6 +87,21 @@
 					</div>
 				</div>
 				<p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
+
+				<!--Me gusta -->
+					<div class="likeDiv">
+						{{#unless user.isLogged}}
+							{{#if_eq this.like 1}}
+							<i class="fas fa-heart"></i> <!-- solid -->
+							{{else}}
+							<i class="far fa-heart"></i>
+							{{/if_eq}}
+						{{else}}
+						<i class="far fa-heart"></i>
+						{{/unless}}
+					</div>
+				<!--Me gusta-->
+
 			</div>
 			{{/each}}
 			{{else}}

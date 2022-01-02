@@ -64,6 +64,8 @@ class Post_likeMapper
 	}
 
 
+
+
 	//Eliminar todos los favs asignados a un post
 	public function deleteLikes(Post $post)
 	{

@@ -12,6 +12,9 @@ class PostsComponent extends Fronty.ModelComponent {
 
     this.postsService = new PostsService();
 
+    
+
+
   }
 
   onStart() {
@@ -36,7 +39,7 @@ class PostsComponent extends Fronty.ModelComponent {
     this.postsModelLikes.setPosts(
       // create a Fronty.Model for each item retrieved from the backend
       data.map(
-        (item) => new PostModel(item.id, item.title, item.content, item.author, item.time, item.date, item.image)
+        (item) => new PostModel(item.id, item.title, item.content, item.author, item.time, item.date, item.image,null,null,null,item.like)
     ));
   });
 }
@@ -52,11 +55,14 @@ class PostRowComponent extends Fronty.ModelComponent {
     super(Handlebars.templates.postrow, postModel, null, null);
     
     this.postsComponent = postsComponent;
-    
-    this.userModel = userModel;
+   
+    this.postModel = userModel;
     this.addModel('user', userModel); // a secondary model
-    
+
+    this.postsModelLikes = new PostsModel();
+
     this.router = router;
+
 
     this.addEventListener('click', '.remove-button', (event) => {
       if (confirm(I18n.translate('Are you sure?'))) {
