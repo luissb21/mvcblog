@@ -508,9 +508,33 @@ class PostRest extends BaseRest
 */
 
 
+public function addLike($data)
+	{
+		$currentUser = parent::authenticateUser();
+		//var_dump($data);
 
+		try {
+			$this->post_likeMapper->saveLike($data, $currentUser->getUsername());
+		} catch (ValidationException $e) {
+			header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+			header('Content-Type: application/json');
+			echo (json_encode($e->getErrors()));
+		}
+	}
 
+	public function deleteLike($data)
+	{
+		$currentUser = parent::authenticateUser();
+		//var_dump($data);
 
+		try {
+			$this->post_likeMapper->deletePostLike($data, $currentUser->getUsername());
+		} catch (ValidationException $e) {
+			header($_SERVER['SERVER_PROTOCOL'] . ' 400 Bad request');
+			header('Content-Type: application/json');
+			echo (json_encode($e->getErrors()));
+		}
+	}
 
 }
 
@@ -524,8 +548,10 @@ URIDispatcher::getInstance()
 	->map("GET",	"/filters/$1", array($postRest, "filters"))
 	->map("GET",	"/post/$1", array($postRest, "readPost"))
 	->map("POST", "/post", array($postRest, "createPost"))
+	->map("POST", "/addLike", array($postRest, "addLike"))
 	->map("GET", "/ingredients", array($postRest, "findAllIngredients"))
 	->map("GET", "/myrecipes", array($postRest, "findMyRecipes"))
 	->map("GET", "/recingr/$1", array($postRest, "findRecipeIngredients"))
 	->map("PUT",	"/post/$1", array($postRest, "updatePost"))
-	->map("DELETE", "/post/$1", array($postRest, "deletePost"));
+	->map("DELETE", "/post/$1", array($postRest, "deletePost"))
+	->map("DELETE", "/deleteLike/$1", array($postRest, "deleteLike"));;

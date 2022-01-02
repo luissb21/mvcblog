@@ -39,6 +39,23 @@ class PostsService {
     return $.get(AppConfig.backendServer+'/rest/post/' + id);
   }
 
+  addLike(id) {
+    return $.ajax({
+      url: AppConfig.backendServer+'/rest/addLike',
+      method: 'POST',
+      data: JSON.stringify(id),
+      contentType: 'application/json'
+    });
+  }
+
+  deleteLike(id) {
+    return $.ajax({
+      url: AppConfig.backendServer+'/rest/deleteLike/' + id,
+      method: 'DELETE'
+    });
+  }
+  
+
   deletePost(id) {
     return $.ajax({
       url: AppConfig.backendServer+'/rest/post/' + id,

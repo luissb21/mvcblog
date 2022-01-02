@@ -9,7 +9,28 @@ class PostViewComponent extends Fronty.ModelComponent {
 
     this.postsService = new PostsService();
 
+    var selectedId = this.router.getRouteQueryParam('id');
+    //console.log(selectedId);
+
+    this.addEventListener('click', '#likeBton', () => {
+      var btn = document.getElementById('likeBton');
+      if (btn.classList.contains("far")) {//Accion de Like
+        btn.classList.remove("far");
+        btn.classList.add("fas");
+        this.postsService.addLike(selectedId);
+      } else {//Accion de unlike
+        btn.classList.remove("fas");
+        btn.classList.add("far");
+        this.postsService.deleteLike(selectedId);
+      }
+
+     
+  });
+
+
   }
+
+
 
   onStart() {
     var selectedId = this.router.getRouteQueryParam('id');
