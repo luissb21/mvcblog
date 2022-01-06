@@ -22,7 +22,7 @@ class MyRecipesComponent extends Fronty.ModelComponent {
       this.postsModel.setPosts(
         // create a Fronty.Model for each item retrieved from the backend
         data.map(
-          (item) => new PostModel(item.id, item.title, item.content, item.author, item.time, item.date, item.image,null,null,null,item.like)
+          (item) => new PostModel(item.id, item.title, item.content, item.author, item.time, item.date, item.image,null,null,null,item.like,item.count)
         ));
     });
   }

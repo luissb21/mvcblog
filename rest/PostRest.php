@@ -54,7 +54,8 @@ class PostRest extends BaseRest
 				"author" => $post->getAuthor(),
 				"time" => $post->getTime(),
 				"date" => $post->getDate(),
-				"image" => $post->getImage()
+				"image" => $post->getImage(),
+				"count" => $this->post_likeMapper->countLikesPost($post)
 			));
 		}
 	
@@ -170,7 +171,8 @@ class PostRest extends BaseRest
 			"date" => $post->getDate(),
 			"image" => $post->getImage(),
 			"ingredients" => $post_ingr_array,
-			"like" => $post->getLike()
+			"like" => $post->getLike(),
+			"count" => $this->post_likeMapper->countLikesPost($post)
 
 		);
 
@@ -338,7 +340,8 @@ class PostRest extends BaseRest
 				"time" => $post->getTime(),
 				"date" => $post->getDate(),
 				"image" => $post->getImage(),
-				"like" => $post->getLike()
+				"like" => $post->getLike(),
+				"count" => $this->post_likeMapper->countLikesPost($post)
 			));
 		}
 
@@ -365,7 +368,8 @@ class PostRest extends BaseRest
 				"time" => $post->getTime(),
 				"date" => $post->getDate(),
 				"image" => $post->getImage(),
-				"like" => $post->getLike()
+				"like" => $post->getLike(),
+				"count" => $this->post_likeMapper->countLikesPost($post)
 			));
 		}
 
@@ -450,7 +454,8 @@ class PostRest extends BaseRest
 					"author" => $post->getAuthor(),
 					"time" => $post->getTime(),
 					"date" => $post->getDate(),
-					"image" => $post->getImage()
+					"image" => $post->getImage(),
+					"count" => $this->post_likeMapper->countLikesPost($post)
 				));
 			}
 		}
@@ -461,6 +466,7 @@ class PostRest extends BaseRest
 		header('Content-Type: application/json');
 		echo (json_encode($posts_array));
 	}
+
 
 	public function findPostsLiked(){
 		$posts_array = array();
@@ -480,7 +486,8 @@ class PostRest extends BaseRest
 					"time" => $post->getTime(),
 					"date" => $post->getDate(),
 					"image" => $post->getImage(),
-					"like" => $post->getLike()
+					"like" => $post->getLike(),
+					"count" => $this->post_likeMapper->countLikesPost($post)
 				));
 			}
 

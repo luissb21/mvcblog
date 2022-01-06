@@ -58,17 +58,22 @@
             <p fronty-component="PostRowComponent" key="{{id}}" model="posts[{{@index}}]" id="item-{{id}}"></p>
 
 				<!--Me gusta -->
-				<div class="likeDiv">
-					{{#unless user.isLogged}}
-					{{#if_eq this.like 1}}
-					<i class="fas fa-heart"></i> <!-- solid -->
-					{{else}}
-					<i class="far fa-heart"></i>
-					{{/if_eq}}
-					{{else}}
-					<i class="far fa-heart"></i>
-					{{/unless}}
-				</div>
+					<div class="likeDiv">
+						{{#unless user.isLogged}}
+							{{#if_eq this.like 1}}
+							<i class="fas fa-heart"></i> <!-- solid -->
+							{{else}}
+							<i class="far fa-heart"></i>
+							{{/if_eq}}
+						{{else}}
+						<i class="far fa-heart"></i>
+						{{/unless}}
+						{{#if this.count}}
+						<p>{{this.count}}</p>
+						{{else}}
+						<p>0</p>
+						{{/if}}
+					</div>
 				<!--Me gusta-->
 
       </div>

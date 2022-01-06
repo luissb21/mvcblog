@@ -12,7 +12,7 @@ class PostViewComponent extends Fronty.ModelComponent {
     var selectedId = this.router.getRouteQueryParam('id');
     //console.log(selectedId);
 
-    this.addEventListener('click', '#likeBton', () => {
+    this.addEventListener('click', '#likeBton', () => { //La anicmacion de like funciona sin estar logeado, pero no se añade el like en back
       var btn = document.getElementById('likeBton');
       if (btn.classList.contains("far")) {//Accion de Like
         btn.classList.remove("far");

@@ -45,6 +45,8 @@ class Post {
 
 	private $like;
 
+	private $count;
+
 	/**
 	* The constructor
 	*
@@ -54,7 +56,7 @@ class Post {
 	* @param User $author The author of the post
 	* @param mixed $comments The list of comments
 	*/
-	public function __construct($id=NULL, $title=NULL, $content=NULL, $author=NULL, $time=NULL, $date=NULL, $image=NULL, $ingredients=NULL, $like=NULL) {
+	public function __construct($id=NULL, $title=NULL, $content=NULL, $author=NULL, $time=NULL, $date=NULL, $image=NULL, $ingredients=NULL, $like=NULL, $count=NULL) {
 		$this->id = $id;
 		$this->title = $title;
 		$this->content = $content;
@@ -64,6 +66,7 @@ class Post {
 		$this->image = $image;
 		$this->ingredients = $ingredients;
 		$this->like = $like;
+		$this->count = $count;
 	}
 
 	/**
@@ -163,6 +166,14 @@ class Post {
 
 	public function setLike($like) {
 		$this->like = $like;
+	}
+
+	public function getCount() {
+		return $this->count;
+	}
+
+	public function setCount($count) {
+		$this->count = $count;
 	}
 
 	public function checkIsValidForCreate() {
